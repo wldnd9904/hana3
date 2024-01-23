@@ -1,0 +1,47 @@
+ /* Mini devices */
+@media (min-width: 0px) {
+   body:after {
+       content: ' XXS '
+   }
+}
+ /* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) { 
+    body::after {
+        content:' XS '
+    }   
+}
+
+ /* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) { 
+    body::after {
+        content:' SM '
+    }   
+}
+
+ /* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) { 
+    body::after {
+        content:' MD '
+    }   
+}
+
+ /* X-Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) { 
+    body::after {
+        content:' LG '
+    }   
+}
+
+ /* XX-Large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) { 
+    body::after {
+        content:' XL '
+    }   
+}
+
+.box {
+    background-color: lightblue;
+    border: 1px solid blue;
+    min-height: 20px;
+}
+
