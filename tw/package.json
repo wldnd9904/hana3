@@ -1,0 +1,18 @@
+{
+  "name": "tw",
+  "version": "0.0.1",
+  "description": "tailwind study project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch"
+  },
+  "keywords": [
+    "tailwind"
+  ],
+  "author": "wldnd9904",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
+  }
+}
