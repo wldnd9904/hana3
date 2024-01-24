@@ -1,7 +1,0 @@
-txt
-br11
-ttt.txt
-dev1
-dev2
-master1
-master2
