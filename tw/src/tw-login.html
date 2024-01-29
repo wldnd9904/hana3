@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>테일윈드 연습</title>
+    <link href="../dist/output.css" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container mx-auto">
+      <div
+        class="sm:mx-auto sm:max-w-3xl flex flex-col items-center sm:border rounded-xl border-gray-300 sm:shadow-lg p-4 mt-4"
+      >
+        <h2 class="font-bold text-center mb-8">로그인</h2>
+        <div class="w-full sm:w-11/12">
+          <form>
+            <div class="flex flex-row flex-wrap items-center group mb-4">
+              <label class="text-left w-2/12 mb-1 text-sm font-semibold"
+                >이메일</label
+              >
+              <input
+                type="email"
+                class="w-full sm:w-10/12 border shadow-md rounded-md p-2 focus:border-red-400"
+                placeholder="이메일을 입력해 주세요."
+                required
+              />
+            </div>
+            <div class="flex flex-row flex-wrap items-center group mb-4">
+              <label class="text-left w-2/12 mb-1 text-sm font-semibold"
+                >비밀번호</label
+              >
+              <input
+                type="password"
+                class="w-full sm:w-10/12 border shadow-md rounded-md p-2 focus:border-red-400"
+                placeholder="비밀번호를 입력해 주세요."
+                required
+              />
+            </div>
+            <div class="w-full flex flex-row justify-end gap-2 mb-4">
+              <button class="text-sm underline underline-offset-2">
+                아이디/비밀번호 찾기
+              </button>
+              <button class="text-sm underline underline-offset-2">
+                회원가입
+              </button>
+            </div>
+            <div class="flex flex-col items-center">
+              <div class="flex flex-row">
+                <button
+                  class="rounded-full hover:opacity-50 w-10 h-10 text-center text-white font-sans font-extrabold bg-green-500 my-3 shadow-md"
+                >
+                  N
+                </button>
+                <button
+                  class="rounded-full hover:opacity-50 w-10 h-10 text-center text-blue-500 font-sans font-extrabold m-3 border border-gray-300 shadow-md"
+                >
+                  G
+                </button>
+                <button
+                  class="rounded-full hover:opacity-50 w-10 h-10 text-center text-red-950 font-sans font-extrabold bg-yellow-500 my-3 shadow-md"
+                >
+                  K
+                </button>
+              </div>
+              <button
+                type="submit"
+                class="rounded-md shadow-md bg-white w-48 p-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              >
+                로그인
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
