@@ -55,8 +55,7 @@ let fromArr = [
 
 function makeObjectFromArray(arr) {
   let toObj = {};
-  for (const nestedArr of arr) {
-    const [key, ...value] = nestedArr;
+  for (const [key, ...value] of arr) {
     toObj[key] = value;
   }
   return toObj;
@@ -70,9 +69,9 @@ console.log(makeObjectFromArray(fromArr));
 // => [['A', 10, 20], ['B', 30, 40], ['C', 50, 60, 70]]
 let fromObj = { A: [10, 20], B: [30, 40], C: [50, 60, 70] };
 function makeArrayfromObject(obj) {
-  return Reflect.ownKeys(fromObj).map((key) => [key, ...fromObj[key]]);
+  return Reflect.ownKeys(obj).map((key) => [key, ...obj[key]]);
 }
-console.log(makeArrayfromObject(obj));
+console.log(makeArrayfromObject(fromObj));
 console.log("----------------------------");
 // 원시값(primitive)만을 갖는 객체 kim을 복사하는 프로그램을 Object의 클래스 메소드 / spread(...) 연산자를 사용하지 말고 작성하시오.
 const kim = { nid: 3, nm: "Hong", addr: "Pusan" };

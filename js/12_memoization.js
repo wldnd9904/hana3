@@ -21,14 +21,12 @@ let count = 0;
 
 let memoizedFibonacci = memoization((a) => {
   count++;
-  if (a <= 2) return 1;
-  return memoizedFibonacci(a - 1) + memoizedFibonacci(a - 2);
+  return a < 2 ? a : memoizedFibonacci(a - 1) + memoizedFibonacci(a - 2);
 });
 
 let memoizedFactorial = memoization((a) => {
   count++;
-  if (a <= 2) return a;
-  return a * memoizedFactorial(a - 1);
+  return a <= 2 ? a : a * memoizedFactorial(a - 1);
 });
 
 function compare(i) {
@@ -37,7 +35,11 @@ function compare(i) {
   // count = 0;
   // console.log(memoizedFibonacci(i * 2), count);
   count = 0;
-  console.log(fibonacci(i), count);
+  console.log(memoizedFactorial(i), count);
 }
 
-compare(40);
+compare(50);
+compare(50);
+compare(50);
+compare(50);
+compare(50);
