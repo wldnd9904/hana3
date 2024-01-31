@@ -1,10 +1,9 @@
 function once(fn) {
   let didRun = false;
   return function (...args) {
-    if (!didRun) {
-      didRun = true;
-      return fn.call(this, ...args);
-    } else return;
+    if (didRun) return;
+    didRun = true;
+    return fn.apply(this, args);
   };
 }
 const thisObj1 = { id: 201 };
