@@ -1,3 +1,4 @@
+import assert from "assert";
 console.log("----------------------------------------");
 {
   //아래 users 배열에 대하여 추가/수정/삭제하는 순수 함수를 작성하시오.
@@ -25,7 +26,7 @@ console.log("----------------------------------------");
 console.log("----------------------------------------");
 {
   //ex1) 배열의 각 원소를 String으로 변환하시오.
-  const assert = require("assert");
+  // const assert = require("assert");
   const arr = [1, 2, 3, true];
   const ret1 = arr.map((item) => `${item}`);
   console.log(ret1);
