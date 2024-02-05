@@ -1,3 +1,5 @@
+import * as dateutils from "./utils..js/dateutils.js";
+
 // let arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 // for (i = 0; i < 1000000000; i++) arr[Math.ceil(Math.random() * 10) - 1]++;
 // console.log(arr);
@@ -50,39 +52,39 @@ console.log(d5);
 const d6 = new Date();
 const d7 = new Date();
 d7.setFullYear(2023);
-function printCalender(date) {
-  let d = new Date(date);
-  d.setDate(1);
-  d.setMonth(d.getMonth() + 1);
-  d.setDate(0);
-  const lastDate = d.getDate();
-  let day = date.getDay();
-  let calender = `\n     ${date.getFullYear().toString().padStart(4, "0")} 년 ${
-    date.getMonth() + 1
-  } 월\n`;
-  calender += " 일 월 화 수 목 금 토\n";
-  for (let i = 0; i < day; i++) {
-    calender += "   ";
-  }
-  for (let i = 1; i <= lastDate; i++) {
-    calender += i.toString().padStart(3, " ");
-    if (++day == 7) {
-      calender += "\n";
-      day = 0;
-    }
-  }
-  calender += "\n";
-  console.log(calender);
-}
+// function printCalender(date) {
+//   let d = new Date(date);
+//   d.setDate(1);
+//   d.setMonth(d.getMonth() + 1);
+//   d.setDate(0);
+//   const lastDate = d.getDate();
+//   let day = date.getDay();
+//   let calender = `\n     ${date.getFullYear().toString().padStart(4, "0")} 년 ${
+//     date.getMonth() + 1
+//   } 월\n`;
+//   calender += " 일 월 화 수 목 금 토\n";
+//   for (let i = 0; i < day; i++) {
+//     calender += "   ";
+//   }
+//   for (let i = 1; i <= lastDate; i++) {
+//     calender += i.toString().padStart(3, " ");
+//     if (++day == 7) {
+//       calender += "\n";
+//       day = 0;
+//     }
+//   }
+//   calender += "\n";
+//   console.log(calender);
+// }
 
 function printCalender2(year, month) {
   let date = new Date(0, month - 1);
   date.setFullYear(year);
-  printCalender(date);
+  dateutils.printCalender(date);
 }
 
-printCalender(d6);
-printCalender(d7);
-printCalender(d4);
+dateutils.printCalender(d6);
+dateutils.printCalender(d7);
+dateutils.printCalender(d4);
 printCalender2(1, 4);
 printCalender2(1999, 4);
