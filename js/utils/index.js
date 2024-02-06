@@ -1,3 +1,5 @@
-import { getLastDate, printCalender } from "./dateutils";
-import * as arr from "./arrayutils";
-arr;
+import { getLastDate, printCalender } from "./dateutils.js";
+import "./arrayutils.js";
+
+export { getLastDate, printCalender };
+export { rand } from "./timeutils.js";
