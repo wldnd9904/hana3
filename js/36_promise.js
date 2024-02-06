@@ -21,8 +21,24 @@ promiseFn(1)
     console.log("finally");
   });
 
-console.log("-------");
-console.log(promiseFn(0));
-console.log("-------");
+import { rand } from "./utils/index.js";
+const randTime = () =>
+  new Promise((resolve) => {
+    const sec = rand(1, 4) * 500;
+    console.log(sec);
+    setTimeout(() => {
+      console.log(sec + "done");
+      return resolve(sec);
+    }, sec);
+  });
 
-console.log(Promise.resolve(1));
+const isParallel = true;
+console.time("promi");
+if (isParallel) {
+  Promise.race([randTime(), randTime(), randTime()]).then((res) => {
+    console.timeEnd("promi");
+    console.log(res);
+  });
+} else {
+  randTime().then(() => randTime().then(() => randTime()));
+}
