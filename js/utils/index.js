@@ -1,6 +1,7 @@
 import { getLastDate, printCalender } from "./dateutils.js";
 import "./arrayutils.js";
 import { rand } from "./timeutils.js";
+import pause from "./pause.js";
 import {
   isEndJaum,
   iga,
@@ -22,4 +23,5 @@ export {
   ilang,
   searchByInitialSound,
   telfmt,
+  pause,
 };
