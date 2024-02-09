@@ -10,4 +10,4 @@ let novel:Novel = {title: "SDf",addr:{id:123},fk:Symbol()}
 type X = {id:string;}
 type Y = {id:number;}
 type Z = X&Y;
-const z:Z = {id:1};
+// const z:Z = {id:1};
