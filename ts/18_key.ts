@@ -19,4 +19,5 @@ type Tyy = KeysOfIntersection<IUser, IDept>; // "id" | "dname" | "age" | "captai
 
 type IUID = keyof (IUser & IDept);
 
+
 export {};

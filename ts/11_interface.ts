@@ -12,9 +12,9 @@ const x2: ReadWrite = { title: "aaa", page: 13 };
 const x3: ReadWrite = { page: 1 };
 // Reading
 x1.title;
-x2.title; // Property 'title' does not exist on type 'ReadWrite'.
+// x2.title; // Property 'title' does not exist on type 'ReadWrite'.
 // Property 'title' does not exist on type 'Reading'. (2339)
-x2.page; // Property 'page' does not exist on type 'ReadWrite'.
+// x2.page; // Property 'page' does not exist on type 'ReadWrite'.
 // Property 'page' does not exist on type 'Writing'. (2339)
 x3.page;
 interface IReading {
@@ -26,12 +26,11 @@ interface IWriting {
 // interface IReadWrite Reading | Writing; //
 interface IReadWrite extends Reading, Writing {}
 
-const x: IReadWrite = { title: "aaa" }; // Property 'page' is missing in type '{ title: string; }'
+// const x: IReadWrite = { title: "aaa" }; // Property 'page' is missing in type '{ title: string; }'
 // but required in type 'IReadWrite'.(2741)
 
 interface IndexSignature {
-  1: number;
-  [key: number]: string | number;
+  // [key: number]: string | number;
   [key: string]: string;
 }
 

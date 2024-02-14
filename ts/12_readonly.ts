@@ -3,7 +3,7 @@ interface Page {
 }
 function read(page: Page) {
   console.log(page.text);
-  page.text = "Hello";
+  // page.text = "Hello";
 }
 
 const pageIsh = {
