@@ -6,4 +6,4 @@ ignore.txt
 */node_modules
 */node_modules.nosync/*
 */node_modules.nosync
-*/tempCodeRunnerFile.js
+*tempCodeRunnerFile*
