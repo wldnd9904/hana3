@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>급여목록(최지웅)</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      table {
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        border: 1px solid black;
+        min-width: 4em;
+        height: 1em;
+        text-align: right;
+        padding: 3px;
+        white-space: nowrap;
+      }
+      th {
+        text-align: center;
+        font-weight: normal;
+      }
+      tbody > tr > td:nth-of-type(2) {
+        text-align: left;
+      }
+      td:empty {
+        border-color: lightgray;
+      }
+    </style>
+  </head>
+  <body onload="draw()"></body>
+  <script>
+    function draw() {
+      //주어진 자료
+      const salary = {
+        base_time: 20,
+        list: [
+          { id: 1, username: "홍길동", work_time: 40, per_pay: 10000 },
+          { id: 2, username: "송민헌", work_time: 20, per_pay: 20000 },
+          { id: 3, username: "장길산", work_time: 30, per_pay: 30000 },
+          { id: 4, username: "임꺽정", work_time: 10, per_pay: 40000 },
+          { id: 5, username: "강민구", work_time: 30, per_pay: 10000 },
+        ],
+      };
+      //필드 연산 관련
+      let memoized기본액 = 0;
+      let memoized초과수당 = 0;
+      let memoized합계 = 0;
+      let memoized세액 = 0;
+      let memoized실지불액 = 0;
+      let 총지불액 = 0;
+      const fields = {
+        번호: (emp) => emp.id,
+        이름: (emp) => emp.username,
+        근무시간: (emp) => emp.work_time,
+        시간당급여액: (emp) => emp.per_pay,
+        기본액: (emp) => (memoized기본액 = emp.work_time * emp.per_pay),
+        초과수당: (emp) =>
+          (memoized초과수당 =
+            emp.work_time > salary.base_time
+              ? (emp.work_time - salary.base_time) * emp.per_pay * 0.5
+              : 0),
+        합계: (emp) => (memoized합계 = memoized기본액 + memoized초과수당),
+        세액: (emp) => (memoized세액 = Math.floor((memoized합계 * 3.3) / 100)),
+        실지불액: (emp) => (memoized실지불액 = memoized합계 - memoized세액),
+      };
+      //테이블 생성
+      const table = document.createElement("table");
+      const tHead = document.createElement("thead");
+      const tBody = document.createElement("tbody");
+      const tHeadR = document.createElement("tr");
+      document.body.appendChild(table);
+      table.appendChild(tHead);
+      table.appendChild(tBody);
+
+      //테이블 헤드
+      for (fieldName of Object.keys(fields)) {
+        const th = document.createElement("th");
+        th.textContent = fieldName;
+        tHeadR.appendChild(th);
+      }
+      tHead.appendChild(tHeadR);
+
+      //테이블 바디
+      salary.list.forEach((emp) => {
+        const tr = document.createElement("tr");
+        for ([_, fieldFunction] of Object.entries(fields)) {
+          const td = document.createElement("td");
+          td.textContent = fieldFunction(emp).toLocaleString();
+          tr.appendChild(td);
+        }
+        총지불액 += memoized실지불액;
+        tBody.appendChild(tr);
+      });
+
+      //테이블 아랫부분
+      for (let i = 0; i < 3; i++) {
+        const tRestR = table.insertRow();
+        for (_ in fields) {
+          tRestR.insertCell();
+        }
+      }
+      const 총지불액LabelCell = table.rows[7].cells[2];
+      const 총지불액ValueCell = table.rows[7].cells[3];
+      총지불액LabelCell.style.textAlign = "left";
+      총지불액LabelCell.style.borderColor = "lightgray";
+      총지불액ValueCell.style.borderColor = "lightgray";
+      총지불액LabelCell.textContent = "총지불액";
+      총지불액ValueCell.textContent = 총지불액.toLocaleString();
+    }
+  </script>
+</html>

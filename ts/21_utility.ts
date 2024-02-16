@@ -19,6 +19,7 @@ let users = [{ name: "Hong" }, { age: 23 }, { id: 1, addr: "Seoul" }];
 type FullUser = {
   [k in keyof (typeof users)[number]]: (typeof users)[number][k];
 };
+type FullUser2 = Partial<Record<keyof typeof users[number], string|number>>
 
 const ret: FullUser = users.reduce((cur, next) => {
   return Object.assign(cur, next);
