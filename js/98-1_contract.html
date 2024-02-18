@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>동적 폼</title>
+    <style>
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      form {
+        margin-bottom: 20px;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      li {
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      button {
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>동적 폼</h2>
+
+    <form id="lectureForm">
+      <label for="lectureName">강의명:</label>
+      <input type="text" id="lectureName" name="lectureName" required />
+
+      <label for="professor">교수명:</label>
+      <input type="text" id="professor" name="professor" required />
+
+      <label for="credit">학점:</label>
+      <input type="number" id="credit" name="credit" required />
+
+      <label for="class">반:</label>
+      <select id="class" name="class" required>
+        <option value="호텔">호텔</option>
+        <option value="커피">커피</option>
+        <!-- 다른 반들 추가 -->
+      </select>
+
+      <label for="classroom">강의실:</label>
+      <input type="text" id="classroom" name="classroom" required />
+
+      <button type="button" onclick="addLecture()">강의 추가</button>
+      <button type="button" onclick="resetForm()">폼 초기화</button>
+    </form>
+
+    <h2>강의 목록</h2>
+    <ul id="lectureList"></ul>
+
+    <h2>교수 목록</h2>
+    <ul id="professorList"></ul>
+
+    <h2>반 목록</h2>
+    <ul id="classList"></ul>
+
+    <script>
+      let lectures = [];
+      let professors = {};
+      let classes = {};
+
+      function addLecture() {
+        const lectureName = document.getElementById("lectureName").value;
+        const professor = document.getElementById("professor").value;
+        const credit = document.getElementById("credit").value;
+        const selectedClass = document.getElementById("class").value;
+        const classroom = document.getElementById("classroom").value;
+
+        // Add lecture
+        const lecture = {
+          name: lectureName,
+          professor: [professor],
+          credit: parseInt(credit),
+          classes: [selectedClass],
+          classroom: classroom,
+        };
+        lectures.push(lecture);
+
+        // Add professor to the list
+        if (!professors[professor]) {
+          professors[professor] = {};
+          updateProfessorList();
+        }
+
+        // Add class to the list
+        if (!classes[selectedClass]) {
+          classes[selectedClass] = {};
+          updateClassList();
+        }
+
+        updateLectureList();
+        resetForm();
+      }
+
+      function updateLectureList() {
+        const lectureListElement = document.getElementById("lectureList");
+        lectureListElement.innerHTML = "";
+
+        lectures.forEach((lecture) => {
+          const li = document.createElement("li");
+          li.textContent = `${lecture.name} - 교수: ${lecture.professor.join(
+            ", "
+          )} - 학점: ${lecture.credit} - 반: ${lecture.classes.join(
+            ", "
+          )} - 강의실: ${lecture.classroom}`;
+          lectureListElement.appendChild(li);
+        });
+      }
+
+      function updateProfessorList() {
+        const professorListElement = document.getElementById("professorList");
+        professorListElement.innerHTML = "";
+
+        for (const professor in professors) {
+          const li = document.createElement("li");
+          li.textContent = `교수: ${professor}`;
+          professorListElement.appendChild(li);
+        }
+      }
+
+      function updateClassList() {
+        const classListElement = document.getElementById("classList");
+        classListElement.innerHTML = "";
+
+        for (const selectedClass in classes) {
+          const li = document.createElement("li");
+          li.textContent = `반: ${selectedClass}`;
+          classListElement.appendChild(li);
+        }
+      }
+
+      function resetForm() {
+        document.getElementById("lectureForm").reset();
+      }
+    </script>
+  </body>
+</html>
