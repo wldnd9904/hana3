@@ -9,7 +9,10 @@ type Props = {
 const Profile = ({ loginUser, logout }: Props) => {
   return (
     <>
-      <div>User Name: {loginUser.name}</div>
+      <span
+        style={{ fontWeight: "bold" }}
+      >{`${loginUser.name}(${loginUser.age})`}</span>
+      <span>{`(ID:${loginUser.id}, Addr:${loginUser.address})`}</span>
       <button onClick={logout}>Logout</button>
     </>
   );
