@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>시간표 생성기</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      table {
+        border-collapse: collapse;
+        width: 700px;
+        margin: 10px;
+      }
+      th,
+      td {
+        border: 1px solid black;
+        min-width: 4em;
+        height: 1em;
+        text-align: center;
+        padding: 5px;
+        white-space: nowrap;
+      }
+      .container {
+        margin: 3px;
+        margin-bottom: 20px;
+        width: 50%;
+        border: 1px solid black;
+        border-radius: 10px;
+        padding: 10px;
+      }
+
+      .container label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      .container textarea {
+        width: 100%;
+        height: 100px;
+        padding: 8px;
+        box-sizing: border-box;
+      }
+      .container .output {
+        width: 100%;
+        height: 100px;
+        overflow-y: auto;
+        white-space: nowrap;
+        padding: 8px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+      }
+      .hcontainer {
+        display: flex;
+        flex-direction: row;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hcontainer">
+      <div class="container">
+        <label for="input-class"
+          >반정보 입력 (1글로벌관광)<br />
+          엔터로 구분하고 공백 없어야 함</label
+        >
+        <textarea id="input-class" name="input-class">
+1글로벌관광
+1호텔항공A
+1호텔항공B
+1관광문화
+1관광경영
+2관광문화
+2관광경영
+2글로벌관광
+2항공서비스
+2외식창업A
+2외식창업B</textarea
+        >
+
+        <label for="input-professor"
+          >교수정보 입력<br />
+          (홍길동 OXOXOXOXOX)</label
+        >
+        <textarea id="input-professor" name="input-professor">
+강병주	XXXXXXOOOO
+김태균	XXXXXXOOOO
+이교종	XXXXXXXXXX
+여세희	XXXXXXXXXX
+이재훈	XXXXXXXXXX
+요시카와	XXXXXXXXXX
+야마다	XXOOXXXXOO
+장지수	XXXXXXXXXX
+김소영	XXXXOOOOXX
+박나혜	OOXXOOXXOO
+이영희	XXXXXXXXXX
+강연실	XXOOXOXXOO
+황민형	OOXXOOOOOO
+남은영	OOOOOOXXOO
+박환태	OOXXOOOOXX
+차강욱	XXXXXXXXXX
+이경희	OOXXOOOOOO
+정재은	OOXXOOOOXX
+박재범	XXXXXXXXXX
+양현숙	XXXXXXXXXX
+정성희	XXXXXXXXXX</textarea
+        >
+
+        <label for="input-lecture"
+          >강의정보 입력 <br />(홍길동,김길동 일반물리학및실습 3
+          1호텔항공A,1호텔항공B)</label
+        >
+        <textarea id="input-lecture" name="input-lecture">
+김태균	태균관계능력A	1	1관광문화
+김태균	태균관계능력B	1	1글로벌관광
+김태균	관광외국어초급	2	1글로벌관광
+김태균	김태균관계능력C	1	1호텔항공B
+김태균	기초일본어	2	1호텔항공B
+김태균	자기개발능력	1	2관광경영
+김태균,황민형	관광외국어실무2(분황민형)	3	2글로벌관광
+김태균	중급일본어	3	2외식창업B
+김태균,요시카와	일본문화와언어1(팀티칭)	3	1관광문화
+강병주,야마다	일본문화와언어1(팀티칭)	3	1관광경영
+강병주	여행일본어기초1	3	2관광문화,2관광경영
+이교종	여행업의이해A	3	1관광문화
+이교종	여행업의이해B	3	1관광경영
+이교종	여행사창업과경영a	2	1호텔항공A
+이교종	여행사창업과경영B	2	1호텔항공B
+이교종	국외여행실무A	3	2관광문화
+이교종	국외여행실무B	3	2관광경영
+여세희	글로벌매너와에티켓	3	1관광문화
+여세희	대인관계능력	1	1관광경영
+여세희	글로벌매너와에티켓	3	1관광경영
+여세희	자기개발능력	1	2관광문화
+여세희	실용영어	3	2관광문화
+여세희	실용영어 	3	2관광경영
+여세희	기내실무2	3	2항공서비스
+여세희	기내실무2	3	2외식창업A
+여세희	기내실무2	3	2외식창업B
+이재훈	대인관계능력	1	1호텔항공A
+이재훈	호텔칵테일실무	3	1호텔항공A,1호텔항공B
+이재훈	호텔칵테일실무	3	2관광문화,2관광경영
+요시카와	기초일본어	2	1호텔항공A
+요시카와	회화일본어	2	1호텔항공B
+요시카와,정성희	관광외국어회화연습(분정성희)	3	2글로벌관광
+요시카와	중급일본어	3	2항공서비스,2외식창업A
+야마다,정성희	관광외국어회화(분정성희)	3	1글로벌관광
+야마다	회화일본어	2	1호텔항공A
+야마다,강연실	세일즈외국어실습2(분강연실)	3	2글로벌관광
+장지수	외식서비스실무	3	1글로벌관광
+장지수	관광마케팅	3	2항공서비스
+장지수	관광마케팅	3	2외식창업A
+장지수	관광마케팅	3	2외식창업B
+김소영	바리스타서비스실무	3	1관광문화
+김소영	바리스타서비스실무	3	1관광경영
+김소영	바리스타서비스실무	3	2항공서비스,2외식창업A,2외식창업B
+박나혜	카페디저트실무1	3	1관광문화
+박나혜	카페디저트실무1	3	1관광경영
+강연실	관광외국어초급	2	1글로벌관광
+강연실,차강욱	관광외국어기초연습(분차강욱)	2	1글로벌관광
+황민형,요시카와	관광외국어연습(분황민형)	3	1글로벌관광
+남은영	항공실무	3	1글로벌관광
+박환태	항공실무	3	1호텔항공A,1호텔항공B
+이경희	관광과인문철학	2	2관광문화,2관광경영
+정재은	바리스타서비스실무	3	2글로벌관광
+박재범	국외여행실무	2	2항공서비스,2외식창업A
+박재범	국외여행실무	2	2외식창업B</textarea
+        >
+        <button onclick="makeData()">데이터 변환</button>
+      </div>
+      <div class="container">
+        <label> <br />반 정보 </label>
+        <div class="output" id="output-class"></div>
+        <label> <br />교수 정보 </label>
+        <div class="output" id="output-professor"></div>
+        <label> <br />강의정보</label>
+        <div class="output" id="output-lecture"></div>
+      </div>
+    </div>
+    <h3 id="progress"></h3>
+    <button onclick="makeSchedule()">시간표 생성</button>
+    <button onclick="(()=>{while(makeSchedule(false)){}})()">
+      100% 될때까지 시간표 생성
+    </button>
+    <div class="hcontainer" id="schedules-class"></div>
+    <div class="hcontainer" id="schedules-professor"></div>
+    <div class="hcontainer" id="schedules-classroom"></div>
+  </body>
+  <script>
+    // 1.교수들 스케줄
+    // 2.교수들 안겹치게
+    // 3.각반별로 공강 하루 만들어줘야함
+    // 4.교수들 연강이 4시간 넘으면 안됨
+    // 4-1. 교수마다 하루 최대 강의 6시간
+    // 5.점심시간 12~1
+    // 오전 : 1교시 (9~10시) 2교시 (10~11) 3교시(11~12)
+    // 오후 : 4교시 (12~13시) 5교시(13~14시) 6교시( 14~15시) 7교시(15~16) 8교시 (16~17시)
+
+    // -반 이름
+    //  +공강 요일 (넣으면 고정, 안넣으면 랜덤)
+
+    // -교수명
+    // -교수 스케줄(월~금 오전/오후 가능 여부)
+    //     [ -강의명                                ]
+    //     [ -학점 (1학점당 1시간)                    ]
+    //     [ -반 (반 목록에 없으면 안 됨)               ]
+    //     [ +강의실 (넣으면 같은 강의실 동시에 못 씀)     ]
+    //     [ +요일/시작시간(넣으면 고정, 안넣으면 랜덤)     ]
+    // 교수이름/강의이름 같으면 구분해주야됨(A/B)
+    const days = ["월", "화", "수", "목", "금"];
+    const lunchTime = 3; //4교시
+    let classes = {};
+    let classrooms = {};
+    let professors = {};
+    let lectures = [];
+    let schedule = {}; // 모든 반별 강의가 담길 객체
+    function makeData() {
+      //입력 받기
+      //반 정보
+      classes = {};
+      const inputText1 = document.getElementById("input-class").value;
+      const classesArray = inputText1.split("\n");
+      classesArray.forEach(function (className) {
+        //console.log(className);
+        if (className == "") return;
+        classes[className] = {};
+      });
+      //console.log(classes);
+      //교수 정보
+      professors = {};
+      const inputText2 = document.getElementById("input-professor").value;
+      const professorsArray = inputText2.split("\n");
+      professorsArray.forEach(function (professorInfo) {
+        if (professorInfo == "") return;
+        const professorInfoArray = professorInfo.split(/\s+/);
+        const professorName = professorInfoArray[0];
+        const scheduleString = professorInfoArray[1].substring(0, 10);
+        const professorSchedule = {
+          월: [scheduleString[0] === "O", scheduleString[1] === "O"],
+          화: [scheduleString[2] === "O", scheduleString[3] === "O"],
+          수: [scheduleString[4] === "O", scheduleString[5] === "O"],
+          목: [scheduleString[6] === "O", scheduleString[7] === "O"],
+          금: [scheduleString[8] === "O", scheduleString[9] === "O"],
+        };
+        professors[professorName] = professorSchedule;
+      });
+      //console.log(professors);
+      //강의 정보
+      lectures = [];
+      // 입력값 가져오기
+      const inputText3 = document.getElementById("input-lecture").value;
+      const lectureArray = inputText3.split("\n");
+      lectureArray.forEach(function (lectureInfo) {
+        if (lectureInfo == "") return;
+        const infoArray = lectureInfo.split(/\s+/);
+        // console.log(infoArray);
+        const lectureObj = {
+          name: infoArray[1], // 강의명
+          professor: infoArray[0].split(","), // 교수명 배열
+          credit: parseInt(infoArray[2]), // 학점
+          classes: infoArray[3].split(","), // 반 배열 (","로 구분)
+          classroom: infoArray[4] != "" ? infoArray[4] : null, // 강의실명
+        };
+        // 강의 정보를 배열에 추가
+        lectures.push(lectureObj);
+      });
+      // 결과 출력
+      const outputClass = document.getElementById("output-class");
+      const outputProfessor = document.getElementById("output-professor");
+      const outputLecture = document.getElementById("output-lecture");
+      outputClass.innerHTML = "";
+      outputProfessor.innerHTML = "";
+      outputLecture.innerHTML = "";
+      for (const className of Object.keys(classes)) {
+        outputClass.innerHTML += className + "<br/>";
+      }
+      for (const profName of Object.keys(professors)) {
+        let iljung = "";
+        for (const day of days) {
+          if (professors[profName][day][0]) iljung += day + "오전 ";
+          if (professors[profName][day][1]) iljung += day + "오후 ";
+        }
+        if (iljung != "") iljung += "개인일정";
+        outputProfessor.innerHTML += `${profName} (${iljung})<br/>`;
+      }
+      for (const lecture of lectures) {
+        // console.log(lecture);
+        outputLecture.innerHTML += `${lecture.name} | 교수: ${
+          lecture.professor
+        } | ${lecture.credit}학점 | 반: ${lecture.classes} | 강의실: ${
+          lecture.classroom ?? "없음"
+        }<br/>`;
+      }
+    }
+    function makeSchedule(print = true) {
+      let ignorelist = [];
+      classrooms = {};
+      schedule = {};
+
+      // 반 설정 & 반별 공강일 채우기
+      for (const _class of Object.keys(classes)) {
+        //console.log(classes[_class]);
+        classes[_class].breakDay = getRandomItemFromArray(days);
+        schedule[_class] = {};
+        for (const day of days) {
+          schedule[_class][day] = new Array(8).fill(
+            classes[_class].breakDay === day ? "공강" : null
+          );
+        }
+      }
+      for (const professor of Object.keys(professors)) {
+        professors[professor].schedule = {};
+        for (const day of days) {
+          professors[professor].schedule[day] = new Array(8).fill(null);
+          // 오전 일정
+          if (professors[professor][day][0])
+            for (let i of [0, 1, 2])
+              professors[professor].schedule[day][i] = "개인일정";
+          // 오후 일정
+          if (professors[professor][day][1])
+            for (let i of [4, 5, 6, 7])
+              professors[professor].schedule[day][i] = "개인일정";
+        }
+      }
+      // 강의 섞기
+      const shuffledLectures = shuffleArray(lectures);
+      let progress = 0;
+      // 강의 순회하며 채우기
+      for (const lecture of shuffledLectures) {
+        // 강의실별 시간표 없으면 생성
+        if (lecture.classroom && !classrooms[lecture.classroom]) {
+          classrooms[lecture.classroom] = {};
+          for (const day of days) {
+            classrooms[lecture.classroom][day] = new Array(8).fill(null);
+          }
+        }
+        // 요일 랜덤 선택
+        const shuffledDays = shuffleArray(days);
+        let canAssign = false;
+        for (const day of shuffledDays) {
+          if (canAssign) break;
+          // 그 반의 공강날이면 패스
+          if (
+            lecture.classes
+              .map((_class) => classes[_class].breakDay)
+              .includes(day)
+          )
+            continue;
+          // 시간 랜덤 선택(50%확률로 1교시 또는 2교시)
+          let time = getRandomNumber(0, 1);
+          for (; time < 8 - lecture.credit; time++) {
+            if (canAssign) break;
+            // 강의 넣을지 여부 판단
+            for (let i = time; i < time + lecture.credit; i++) {
+              if (canAssign) break;
+              // 점심시간이면 안 됨
+              if (i == lunchTime) break;
+              // 이미 그 교수의 강의 있으면 안 됨
+              if (
+                lecture.professor
+                  .map((prof) => professors[prof].schedule[day][i])
+                  .filter((item) => item != null).length
+              )
+                break;
+              // 교수님 하루에 6시간까지만 할 수 있음
+              if (
+                lecture.professor
+                  .map(
+                    (prof) =>
+                      professors[prof].schedule[day].filter(
+                        (item) => item != null
+                      ).length
+                  )
+                  .filter((length) => length > 6 - lecture.credit).length
+              )
+                break;
+              // 이미 그 반 그 시간에 강의 있으면 안 됨
+              if (
+                lecture.classes
+                  .map((_class) => schedule[_class][day][i])
+                  .filter((item) => item != null).length
+              )
+                break;
+              // 강의실 겹치면 안 됨
+              if (lecture.classroom && classrooms[lecture.classroom][day][i])
+                break;
+
+              //전부 통과했으면 강의 넣기
+              if (i == time + lecture.credit - 1) {
+                canAssign = true;
+              }
+            }
+            if (!canAssign) continue;
+            // 드디어 강의 넣기
+            for (let j = time; j < time + lecture.credit; j++) {
+              lecture.classes.forEach((_class) => {
+                schedule[_class][day][j] = lecture;
+              });
+              lecture.professor.forEach((profName) => {
+                professors[profName].schedule[day][j] = lecture;
+              });
+              if (lecture.classroom)
+                classrooms[lecture.classroom][day][j] = lecture;
+            }
+          }
+        }
+        // 도저히 안되면 무시
+        if (!canAssign) {
+          ignorelist.push(lecture);
+          continue;
+        }
+        progress += 1;
+      }
+      document.getElementById("progress").textContent =
+        Math.round((progress / lectures.length) * 100) + "%";
+      if (!print && ignorelist.length > 0) {
+        return ignorelist.length;
+      }
+      //출력부
+      document.getElementById("schedules-class").innerHTML = "";
+      document.getElementById("schedules-professor").innerHTML = "";
+      document.getElementById("schedules-classroom").innerHTML = "";
+      for (const className of Object.keys(classes)) {
+        drawSchedule(
+          "schedules-class",
+          schedule[className],
+          className + "반 시간표"
+        );
+      }
+      for (const profName of Object.keys(professors)) {
+        drawSchedule(
+          "schedules-professor",
+          professors[profName].schedule,
+          profName + "교수님 시간표"
+        );
+      }
+      for (const classroom of Object.keys(classrooms)) {
+        drawSchedule(
+          "schedules-classroom",
+          classrooms[classroom],
+          classroom + "강의실 시간표"
+        );
+      }
+      console.log(ignorelist);
+      return ignorelist.length;
+    }
+
+    // 화면에 그리기
+    function drawSchedule(targetID, schedule, desc) {
+      //테이블 생성
+      const scheduleDiv = document.getElementById(targetID);
+      const table = document.createElement("table");
+      const tHead = document.createElement("thead");
+      const tBody = document.createElement("tbody");
+      const tHeadR = document.createElement("tr");
+      const caption = document.createElement("caption");
+      caption.textContent = desc;
+      scheduleDiv.appendChild(table);
+      table.appendChild(caption);
+      table.appendChild(tHead);
+      table.appendChild(tBody);
+      //테이블 헤드
+      for (const day of ["-", ...days]) {
+        const th = document.createElement("th");
+        th.textContent = day;
+        tHeadR.appendChild(th);
+      }
+      tHead.appendChild(tHeadR);
+      //테이블 바디
+      for (const i of [0, 1, 2, 3, 4, 5, 6, 7]) {
+        const tr = document.createElement("tr");
+        const tTimed = document.createElement("td");
+        tTimed.textContent = `${i + 1}교시`;
+        tr.appendChild(tTimed);
+        for (const day of [...days]) {
+          const td = document.createElement("td");
+          td.innerHTML = schedule[day][i]
+            ? typeof schedule[day][i] == "string"
+              ? schedule[day][i]
+              : `${schedule[day][i].name}<br/>${schedule[day][
+                  i
+                ].professor.toString()}<br/>${schedule[day][i].classroom ?? ""}`
+            : "-";
+          td.style.backgroundColor = schedule[day][i]
+            ? typeof schedule[day][i] == "string"
+              ? "white"
+              : generateColorHash(schedule[day][i].name)
+            : "white";
+          tr.appendChild(td);
+        }
+        tBody.appendChild(tr);
+      }
+    }
+
+    // 랜덤으로 배열 섞기
+    function shuffleArray(arr) {
+      array = [...arr];
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+    // 랜덤으로 요소 뽑기
+    function getRandomItemFromArray(array) {
+      const randomIndex = Math.floor(Math.random() * array.length);
+      return array[randomIndex];
+    }
+    // 랜덤 숫자 뽑기
+    function getRandomNumber(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    // 과목별 색깔
+    function generateColorHash(inputString) {
+      function simpleHash(s) {
+        let hash = 0;
+        for (let i = 0; i < s.length; i++) {
+          hash = s.charCodeAt(i) + (hash << 5) - hash;
+        }
+        return hash;
+      }
+
+      function hashToHSL(hash) {
+        const hue = ((hash % 360) + 360) % 360;
+        const saturation = 50;
+        const lightness = 70;
+
+        return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+      }
+
+      const hashValue = simpleHash(inputString);
+      const colorCode = hashToHSL(hashValue);
+
+      return colorCode;
+    }
+  </script>
+</html>
