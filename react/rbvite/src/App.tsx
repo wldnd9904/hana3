@@ -1,5 +1,5 @@
 // src/App.tsx
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Hello from "./components/Hello";
 import My from "./components/My";
 import "./App.css";
@@ -28,6 +28,7 @@ const SampleSession = {
 function App() {
   const [count, setCount] = useState(0);
   const [session, setSession] = useState<Session>(SampleSession);
+  const titleRef = useRef<HTMLHeadingElement>(null);
 
   const plusCount = () => {
     for (let i = 0; i < 10; i++) {
@@ -53,20 +54,35 @@ function App() {
       cart: s.cart.filter((item) => item.id != id),
     }));
   };
+  const addItem = (item: Cart) => {
+    setSession((s) => ({
+      ...s,
+      cart: [...s.cart, item],
+    }));
+  };
 
   console.log("rerender");
   return (
     <>
+      <h1 ref={titleRef}>Vite + React + TS</h1>
       <My
         session={session}
         login={login}
         logout={logout}
         removeItem={removeItem}
+        addItem={addItem}
       />
       <Hello name="홍길동" age={30 + count} plusCount={plusCount}>
         <h3>반갑습니다~</h3>
       </Hello>
       <h2>count: {count}</h2>
+      <button
+        onClick={() => {
+          titleRef.current?.scrollIntoView({ behavior: "smooth" });
+        }}
+      >
+        Top
+      </button>
     </>
   );
 }

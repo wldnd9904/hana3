@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, FormEventHandler, useRef, useState } from "react";
 
 // src/components/Login.tsx
 type Props = {
@@ -8,54 +8,99 @@ type Props = {
 const ADDRESSLIST = ["서울", "시골", "귤"];
 
 const Login = ({ login }: Props) => {
-  const [id, setId] = useState(0);
-  const [name, setName] = useState("");
-  const [age, setAge] = useState(0);
-  const [address, setAddress] = useState("서울");
-  const changeAddress = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setAddress(e.currentTarget.value);
+  // const [id, setId] = useState(0);
+  // const [name, setName] = useState("");
+  // const [age, setAge] = useState(0);
+  // const [address, setAddress] = useState("서울");
+  const idRef = useRef<HTMLInputElement | null>(null);
+  const nameRef = useRef<HTMLInputElement | null>(null);
+  const ageRef = useRef<HTMLInputElement | null>(null);
+  const addressRef = useRef<HTMLSelectElement | null>(null);
+
+  // const changeAddress = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  //   setAddress(e.currentTarget.value);
+  // };
+  const clear = (e: FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    idRef.current!.value = "";
+    nameRef.current!.value = "";
+    ageRef.current!.value = "";
+    addressRef.current!.value = "";
+  };
+  const submitLogin: FormEventHandler<HTMLFormElement> = (
+    e: FormEvent<HTMLFormElement>
+  ) => {
+    e.preventDefault();
+    if (!idRef.current?.value) {
+      alert("ID를 입력하세요.");
+      idRef.current?.focus();
+      return;
+    }
+    if (!nameRef.current?.value) {
+      alert("이름을 입력하세요.");
+      nameRef.current?.focus();
+      return;
+    }
+    if (!ageRef.current?.value) {
+      alert("나이를 입력하세요.");
+      ageRef.current?.focus();
+      return;
+    }
+    if (
+      !addressRef.current ||
+      !ADDRESSLIST.includes(addressRef.current.value)
+    ) {
+      alert("주소를 선택하세요.");
+      addressRef.current?.focus();
+      return;
+    }
+    const id = idRef.current.value;
+    const name = nameRef.current?.value;
+    const age = ageRef.current?.value;
+    const address = addressRef.current?.value;
+    login(+id, name, address, +age);
   };
   return (
     <>
-      <div id="loginContainer">
-        <div>ID:</div>
-        <input
-          type="number"
-          value={id}
-          onChange={(evt) => {
-            setId(parseInt(evt.currentTarget.value));
-          }}
-        ></input>
-        <div>Name:</div>
-        <input
-          type="text"
-          value={name}
-          onChange={(evt) => {
-            setName(evt.currentTarget.value);
-          }}
-        ></input>
-        <div>Age:</div>
-        <input
-          type="number"
-          value={age}
-          onChange={(evt) => {
-            setAge(parseInt(evt.currentTarget.value));
-          }}
-        ></input>
-        <div>Address:</div>
-        <select value={address} onChange={changeAddress}>
-          {ADDRESSLIST.map((addr, idx) => (
-            <option key={idx}>{addr}</option>
-          ))}
-        </select>
-      </div>
-      <button
-        onClick={() => {
-          login(id, name, address, age);
-        }}
-      >
-        Login
-      </button>
+      <form onSubmit={submitLogin}>
+        <div id="loginContainer">
+          <div>ID:</div>
+          <input
+            type="number"
+            // value={id}
+            // onChange={(evt) => {
+            //   setId(parseInt(evt.currentTarget.value));
+            // }
+            ref={idRef}
+          ></input>
+          <div>Name:</div>
+          <input
+            type="text"
+            // value={name}
+            // onChange={(evt) => {
+            //   setName(evt.currentTarget.value);
+            // }}
+            ref={nameRef}
+          ></input>
+          <div>Age:</div>
+          <input
+            type="number"
+            // value={age}
+            // onChange={(evt) => {
+            //   setAge(parseInt(evt.currentTarget.value));
+            // }}
+            ref={ageRef}
+          ></input>
+          <div>Address:</div>
+          <select /*value={address} onChange={changeAddress}*/ ref={addressRef}>
+            {ADDRESSLIST.map((addr, idx) => (
+              <option key={idx}>{addr}</option>
+            ))}
+          </select>
+        </div>
+        <button type="submit">Login</button>
+        <button onClick={clear}>Clear</button>
+      </form>
     </>
   );
 };
