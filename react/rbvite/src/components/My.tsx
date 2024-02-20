@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { Cart, Session } from "../App";
-import Login from "./Login";
+import Login, { LoginHandle } from "./Login";
 import Profile from "./Profile";
 import Item from "./Item";
 
@@ -23,6 +23,7 @@ type Props = {
 export type ItemHandler = {
   notify: (msg: string) => void;
   removeItem: (itemID: number) => void;
+  loginHandler: LoginHandle;
 };
 const My = forwardRef(
   (
@@ -40,12 +41,19 @@ const My = forwardRef(
     const itemNameRef = useRef<HTMLInputElement | null>(null);
     const itemPriceRef = useRef<HTMLInputElement | null>(null);
     const itemIDRef = useRef<HTMLInputElement | null>(null);
+    const loginHandlerRef = useRef<LoginHandle>(null);
+
     const itemHandler: ItemHandler = {
       notify: (msg) => {
         setMessage(msg);
       },
       removeItem: (id) => {
         removeItem(id);
+      },
+      loginHandler: {
+        noti: (msg: string) => loginHandlerRef.current?.noti(msg),
+        focusId: () => loginHandlerRef.current?.focusId(),
+        focusName: () => loginHandlerRef.current?.focusName(),
       },
     };
     useImperativeHandle(ref, () => itemHandler);
@@ -76,7 +84,7 @@ const My = forwardRef(
         {loginUser ? (
           <Profile loginUser={loginUser} logout={logout} />
         ) : (
-          <Login login={login} />
+          <Login ref={loginHandlerRef} login={login} />
         )}
         <ul>
           {loginUser &&

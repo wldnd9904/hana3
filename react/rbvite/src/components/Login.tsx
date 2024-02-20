@@ -1,5 +1,15 @@
-import { FormEvent, FormEventHandler, useRef, useState } from "react";
-
+import {
+  FormEvent,
+  FormEventHandler,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+} from "react";
+export type LoginHandle = {
+  noti: (msg: string) => void;
+  focusId: () => void;
+  focusName: () => void;
+};
 // src/components/Login.tsx
 type Props = {
   login: (id: number, name: string, address: string, age: number) => void;
@@ -7,7 +17,7 @@ type Props = {
 
 const ADDRESSLIST = ["서울", "시골", "귤"];
 
-const Login = ({ login }: Props) => {
+const Login = forwardRef(({ login }: Props, ref) => {
   // const [id, setId] = useState(0);
   // const [name, setName] = useState("");
   // const [age, setAge] = useState(0);
@@ -16,6 +26,12 @@ const Login = ({ login }: Props) => {
   const nameRef = useRef<HTMLInputElement | null>(null);
   const ageRef = useRef<HTMLInputElement | null>(null);
   const addressRef = useRef<HTMLSelectElement | null>(null);
+  const handler = {
+    noti: (msg: string) => alert(msg),
+    focusId: () => idRef.current?.focus(),
+    focusName: () => nameRef.current?.focus(),
+  };
+  useImperativeHandle(ref, () => handler);
 
   // const changeAddress = (e: React.ChangeEvent<HTMLSelectElement>) => {
   //   setAddress(e.currentTarget.value);
@@ -61,7 +77,8 @@ const Login = ({ login }: Props) => {
     login(+id, name, address, +age);
   };
   return (
-    <>
+    <div id="Login">
+      <span className="title">Login</span>
       <form onSubmit={submitLogin}>
         <div id="loginContainer">
           <div>ID:</div>
@@ -101,7 +118,8 @@ const Login = ({ login }: Props) => {
         <button type="submit">Login</button>
         <button onClick={clear}>Clear</button>
       </form>
-    </>
+    </div>
   );
-};
+});
+Login.displayName = "Login";
 export default Login;

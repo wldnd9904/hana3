@@ -89,16 +89,35 @@ function App() {
     <div id="App">
       <span className="title">App</span>
       <h1 ref={titleRef}>Vite + React + TS</h1>
-      <button
-        onClick={() =>
-          myItemControlRef.current?.removeItem(session.cart[0].id ?? 0)
-        }
+      <div
+        style={{ display: "grid", gridTemplateColumns: "180px 180px 180px" }}
       >
-        첫 항목 제거
-      </button>
-      <button onClick={() => myItemControlRef.current?.notify("ㅎㅇ")}>
-        메시지 설정
-      </button>
+        <button
+          onClick={() => myItemControlRef.current?.loginHandler.focusId()}
+        >
+          Login - ID 포커스
+        </button>{" "}
+        <button
+          onClick={() => myItemControlRef.current?.loginHandler.focusName()}
+        >
+          Login - 이름 포커스
+        </button>{" "}
+        <button
+          onClick={() => myItemControlRef.current?.loginHandler.noti("ㅎㅇ")}
+        >
+          Login - 알림
+        </button>
+        <button
+          onClick={() =>
+            myItemControlRef.current?.removeItem(session.cart[0].id ?? 0)
+          }
+        >
+          My - 첫 항목 제거
+        </button>
+        <button onClick={() => myItemControlRef.current?.notify("ㅎㅇ")}>
+          My - 메시지 설정
+        </button>
+      </div>
       <My
         session={session}
         login={login}
