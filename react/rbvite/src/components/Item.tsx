@@ -33,10 +33,10 @@ function Item({ item, onRemove, onChange }: ItemProps) {
       <span className="id">{item.id}</span>
       <div style={{ width: "80%" }}>
         {editting ? (
-          <>
+          <div>
             <input style={{ width: "5em" }} type="text" ref={nameRef} />
             <input style={{ width: "5em" }} type="number" ref={priceRef} />
-          </>
+          </div>
         ) : (
           <span>
             {item.name}: {item.price.toLocaleString()}원

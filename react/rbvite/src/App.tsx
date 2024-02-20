@@ -1,7 +1,7 @@
 // src/App.tsx
 import { forwardRef, useRef, useState } from "react";
 import Hello from "./components/Hello";
-import My from "./components/My";
+import My, { ItemHandler } from "./components/My";
 import "./App.css";
 import { flushSync } from "react-dom";
 
@@ -30,7 +30,7 @@ function App() {
   const [session, setSession] = useState<Session>(SampleSession);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const inpRef = useRef<HTMLInputElement>(null);
-  const logoutBtnRef = useRef<HTMLButtonElement>();
+  const myItemControlRef = useRef<ItemHandler>(null);
   const plusCount = () => {
     for (let i = 0; i < 10; i++) {
       flushSync(() => {
@@ -89,6 +89,16 @@ function App() {
     <div id="App">
       <span className="title">App</span>
       <h1 ref={titleRef}>Vite + React + TS</h1>
+      <button
+        onClick={() =>
+          myItemControlRef.current?.removeItem(session.cart[0].id ?? 0)
+        }
+      >
+        첫 항목 제거
+      </button>
+      <button onClick={() => myItemControlRef.current?.notify("ㅎㅇ")}>
+        메시지 설정
+      </button>
       <My
         session={session}
         login={login}
@@ -96,6 +106,7 @@ function App() {
         removeItem={removeItem}
         changeItem={changeItem}
         addItem={addItem}
+        ref={myItemControlRef}
       />
       <button
         onClick={() => {
@@ -106,7 +117,7 @@ function App() {
       </button>
       <H5 ss={"ss"} ref={inpRef}></H5>
       <Hello name="홍길동" age={30 + count} plusCount={plusCount}>
-        <h3>반갑습니다~</h3>
+        <h3>반갑습니다(App에서 넣음)</h3>
       </Hello>
       <h2>count: {count}</h2>
       <button
