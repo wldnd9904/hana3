@@ -54,10 +54,22 @@ function App() {
       cart: s.cart.filter((item) => item.id != id),
     }));
   };
-  const addItem = (item: Cart) => {
+  const changeItem = (newItem: Cart) => {
     setSession((s) => ({
       ...s,
-      cart: [...s.cart, item],
+      cart: s.cart.map((item) => (item.id == newItem.id ? newItem : item)),
+    }));
+  };
+  const addItem = (item: {
+    id: number | null;
+    name: string;
+    price: number;
+  }) => {
+    if (!item.id)
+      item.id = Math.max(...session.cart.map((item) => item.id), 0) + 1;
+    setSession((s) => ({
+      ...s,
+      cart: [...s.cart, { ...item, id: item.id! }],
     }));
   };
 
@@ -70,6 +82,7 @@ function App() {
         login={login}
         logout={logout}
         removeItem={removeItem}
+        changeItem={changeItem}
         addItem={addItem}
       />
       <Hello name="홍길동" age={30 + count} plusCount={plusCount}>

@@ -46,7 +46,7 @@ select {
 ul {
   display: flex;
   flex-direction: column;
-  width: 50%;
+  width: 80%;
   padding: 0;
 }
 li {
@@ -66,6 +66,7 @@ li {
     background-color: tomato;
     color: white;
     padding: 6px 8px;
+    margin: 0 2px;
   }
 }
 .card {
@@ -80,4 +81,34 @@ li {
   font-weight: bold;
   position: relative;
   top: -2.1em;
+}
+
+.id {
+  background-color: indianred;
+  width: 2em;
+  height: 2em;
+  border-radius: 50%;
+  color: white;
+  font-weight: bold;
+  font-size: 0.8em;
+  align-content: center;
+  vertical-align: middle;
+  line-height: 2em;
+  letter-spacing: -2px;
+  text-indent: -2px;
+}
+
+#newItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  input {
+    height: 1em;
+    width: 5em;
+  }
+  label {
+    font-size: 0.8em;
+    padding-left: 1em;
+  }
 }
