@@ -16,9 +16,9 @@ const Hello = ({
   return (
     <div id="Hello">
       <div className="title">Hello</div>
-      <h1>
+      <h3>
         Hello, {name}({age})
-      </h1>
+      </h3>
       {children}
       <button onClick={plusCount}>count + 1</button>
     </div>

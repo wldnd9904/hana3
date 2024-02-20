@@ -22,7 +22,32 @@ select {
   align-items: baseline;
   margin-bottom: 20px;
 }
+#App {
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid cadetblue;
+  padding: 10px;
+  margin-bottom: 30px;
+  .title {
+    color: cadetblue;
+  }
+}
+#H5 {
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid yellowgreen;
+  padding: 10px;
+  margin-bottom: 30px;
+  .title {
+    color: yellowgreen;
+  }
+}
 #My {
+  margin-top: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -34,6 +59,7 @@ select {
   }
 }
 #Hello {
+  margin-top: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;

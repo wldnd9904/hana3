@@ -1,5 +1,5 @@
 // src/App.tsx
-import { useRef, useState } from "react";
+import { forwardRef, useRef, useState } from "react";
 import Hello from "./components/Hello";
 import My from "./components/My";
 import "./App.css";
@@ -29,7 +29,8 @@ function App() {
   const [count, setCount] = useState(0);
   const [session, setSession] = useState<Session>(SampleSession);
   const titleRef = useRef<HTMLHeadingElement>(null);
-
+  const inpRef = useRef<HTMLInputElement>(null);
+  const logoutBtnRef = useRef<HTMLButtonElement>();
   const plusCount = () => {
     for (let i = 0; i < 10; i++) {
       flushSync(() => {
@@ -72,10 +73,21 @@ function App() {
       cart: [...s.cart, { ...item, id: item.id! }],
     }));
   };
-
+  const H5 = forwardRef(
+    ({ ss }: { ss: string }, ref: React.LegacyRef<HTMLInputElement>) => {
+      return (
+        <div id="H5">
+          <span className="title">H5</span>
+          <input ref={ref}></input>
+        </div>
+      );
+    }
+  );
+  H5.displayName = "H5";
   console.log("rerender");
   return (
-    <>
+    <div id="App">
+      <span className="title">App</span>
       <h1 ref={titleRef}>Vite + React + TS</h1>
       <My
         session={session}
@@ -85,6 +97,14 @@ function App() {
         changeItem={changeItem}
         addItem={addItem}
       />
+      <button
+        onClick={() => {
+          alert(inpRef.current!.value);
+        }}
+      >
+        H5내용 읽어오기
+      </button>
+      <H5 ss={"ss"} ref={inpRef}></H5>
       <Hello name="홍길동" age={30 + count} plusCount={plusCount}>
         <h3>반갑습니다~</h3>
       </Hello>
@@ -96,7 +116,7 @@ function App() {
       >
         Top
       </button>
-    </>
+    </div>
   );
 }
 

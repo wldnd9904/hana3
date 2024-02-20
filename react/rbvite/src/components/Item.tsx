@@ -43,12 +43,7 @@ function Item({ item, onRemove, onChange }: ItemProps) {
           </span>
         )}
       </div>
-      <button
-        style={{ backgroundColor: "pink" }}
-        onClick={() => {
-          toggleEdit();
-        }}
-      >
+      <button style={{ backgroundColor: "pink" }} onClick={toggleEdit}>
         E
       </button>
       <button
