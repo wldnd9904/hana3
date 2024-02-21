@@ -5,6 +5,7 @@ import {
   useImperativeHandle,
   useRef,
 } from "react";
+import { useCounter } from "../contexts/counter-context";
 export type LoginHandle = {
   noti: (msg: string) => void;
   focusId: () => void;
@@ -32,6 +33,7 @@ const Login = forwardRef(({ login }: Props, ref) => {
     focusName: () => nameRef.current?.focus(),
   };
   useImperativeHandle(ref, () => handler);
+  const { count } = useCounter();
 
   // const changeAddress = (e: React.ChangeEvent<HTMLSelectElement>) => {
   //   setAddress(e.currentTarget.value);
@@ -79,6 +81,7 @@ const Login = forwardRef(({ login }: Props, ref) => {
   return (
     <div id="Login">
       <span className="title">Login</span>
+      <span>count in counter-context:{count}</span>
       <form onSubmit={submitLogin}>
         <div id="loginContainer">
           <div>ID:</div>

@@ -3,7 +3,7 @@ import { forwardRef, useRef, useState } from "react";
 import Hello from "./components/Hello";
 import My, { ItemHandler } from "./components/My";
 import "./App.css";
-import { flushSync } from "react-dom";
+import { useCounter } from "./contexts/counter-context";
 
 export type LoginUser = {
   id: number;
@@ -26,18 +26,11 @@ const SampleSession = {
   ],
 };
 function App() {
-  const [count, setCount] = useState(0);
   const [session, setSession] = useState<Session>(SampleSession);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const inpRef = useRef<HTMLInputElement>(null);
   const myItemControlRef = useRef<ItemHandler>(null);
-  const plusCount = () => {
-    for (let i = 0; i < 10; i++) {
-      flushSync(() => {
-        setCount((prevCount) => prevCount + 1);
-      });
-    }
-  };
+  const { count, plusCount } = useCounter();
   const login = (id: number, name: string, address: string, age: number) => {
     if (name.trim().length == 0) return;
     else

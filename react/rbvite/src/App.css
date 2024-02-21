@@ -28,7 +28,7 @@ select {
   flex-direction: column;
   align-items: center;
   border: 2px solid cadetblue;
-  padding: 10px;
+  padding: 5px;
   margin-bottom: 30px;
   .title {
     color: cadetblue;
@@ -40,7 +40,7 @@ select {
   flex-direction: column;
   align-items: center;
   border: 2px solid rgb(255, 86, 201);
-  padding: 10px;
+  padding: 5px;
   margin-bottom: 30px;
   .title {
     color: rgb(255, 86, 201) !important;
@@ -52,7 +52,7 @@ select {
   flex-direction: column;
   align-items: center;
   border: 2px solid yellowgreen;
-  padding: 10px;
+  padding: 5px;
   margin-bottom: 30px;
   .title {
     color: yellowgreen;
@@ -64,7 +64,7 @@ select {
   flex-direction: column;
   align-items: center;
   border: 2px solid red;
-  padding: 10px;
+  padding: 5px;
   margin-bottom: 30px;
   .title {
     color: red;
@@ -76,7 +76,7 @@ select {
   flex-direction: column;
   align-items: center;
   border: 2px solid blue;
-  padding: 10px;
+  padding: 5px;
   .title {
     color: blue;
   }
