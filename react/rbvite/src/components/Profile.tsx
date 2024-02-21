@@ -1,18 +1,15 @@
-// src/components/Profile.tsx
-import { LoginUser } from "../App";
+import { useSession } from "../contexts/session-context";
 
-type Props = {
-  loginUser: LoginUser;
-  logout: () => void;
-};
-
-const Profile = ({ loginUser, logout }: Props) => {
+const Profile = () => {
+  const { session, logout } = useSession();
   return (
     <>
-      <span
-        style={{ fontWeight: "bold" }}
-      >{`${loginUser.name}(${loginUser.age})`}</span>
-      <span>{`(ID:${loginUser.id}, Addr:${loginUser.address})`}</span>
+      <span style={{ fontWeight: "bold" }}>{`${session.loginUser!.name}(${
+        session.loginUser!.age
+      })`}</span>
+      <span>{`(ID:${session.loginUser!.id}, Addr:${
+        session.loginUser!.address
+      })`}</span>
       <button onClick={logout}>Logout</button>
     </>
   );

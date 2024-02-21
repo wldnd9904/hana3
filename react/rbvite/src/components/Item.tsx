@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import { Cart } from "../App";
 import { flushSync } from "react-dom";
+import { Cart } from "../type";
 
 type ItemProps = {
   item: Cart;

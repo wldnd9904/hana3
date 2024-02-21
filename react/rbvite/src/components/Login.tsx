@@ -1,24 +1,23 @@
+// src/components/Login.tsx
+
 import {
   FormEvent,
   FormEventHandler,
+  MutableRefObject,
   forwardRef,
   useImperativeHandle,
   useRef,
 } from "react";
 import { useCounter } from "../contexts/counter-context";
+import { useSession } from "../contexts/session-context";
 export type LoginHandle = {
   noti: (msg: string) => void;
   focusId: () => void;
   focusName: () => void;
 };
-// src/components/Login.tsx
-type Props = {
-  login: (id: number, name: string, address: string, age: number) => void;
-};
-
 const ADDRESSLIST = ["서울", "시골", "귤"];
 
-const Login = forwardRef(({ login }: Props, ref) => {
+const Login = forwardRef(({}, ref) => {
   // const [id, setId] = useState(0);
   // const [name, setName] = useState("");
   // const [age, setAge] = useState(0);
@@ -27,6 +26,7 @@ const Login = forwardRef(({ login }: Props, ref) => {
   const nameRef = useRef<HTMLInputElement | null>(null);
   const ageRef = useRef<HTMLInputElement | null>(null);
   const addressRef = useRef<HTMLSelectElement | null>(null);
+  const { login } = useSession();
   const handler = {
     noti: (msg: string) => alert(msg),
     focusId: () => idRef.current?.focus(),
@@ -49,20 +49,17 @@ const Login = forwardRef(({ login }: Props, ref) => {
     e: FormEvent<HTMLFormElement>
   ) => {
     e.preventDefault();
-    if (!idRef.current?.value) {
-      alert("ID를 입력하세요.");
-      idRef.current?.focus();
-      return;
-    }
-    if (!nameRef.current?.value) {
-      alert("이름을 입력하세요.");
-      nameRef.current?.focus();
-      return;
-    }
-    if (!ageRef.current?.value) {
-      alert("나이를 입력하세요.");
-      ageRef.current?.focus();
-      return;
+    for (const [fieldRef, fieldName] of [
+      [idRef, "ID를"],
+      [nameRef, "이름을"],
+      [ageRef, "나이를"],
+    ]) {
+      const ref = fieldRef as MutableRefObject<HTMLInputElement | null>;
+      if (!ref.current?.value) {
+        alert(fieldName + " 입력하세요.");
+        ref.current?.focus();
+        return;
+      }
     }
     if (
       !addressRef.current ||
@@ -72,10 +69,10 @@ const Login = forwardRef(({ login }: Props, ref) => {
       addressRef.current?.focus();
       return;
     }
-    const id = idRef.current.value;
-    const name = nameRef.current?.value;
-    const age = ageRef.current?.value;
-    const address = addressRef.current?.value;
+    const id = idRef.current!.value;
+    const name = nameRef.current!.value;
+    const age = ageRef.current!.value;
+    const address = addressRef.current!.value;
     login(+id, name, address, +age);
   };
   return (
@@ -85,34 +82,13 @@ const Login = forwardRef(({ login }: Props, ref) => {
       <form onSubmit={submitLogin}>
         <div id="loginContainer">
           <div>ID:</div>
-          <input
-            type="number"
-            // value={id}
-            // onChange={(evt) => {
-            //   setId(parseInt(evt.currentTarget.value));
-            // }
-            ref={idRef}
-          ></input>
+          <input type="number" ref={idRef}></input>
           <div>Name:</div>
-          <input
-            type="text"
-            // value={name}
-            // onChange={(evt) => {
-            //   setName(evt.currentTarget.value);
-            // }}
-            ref={nameRef}
-          ></input>
+          <input type="text" ref={nameRef}></input>
           <div>Age:</div>
-          <input
-            type="number"
-            // value={age}
-            // onChange={(evt) => {
-            //   setAge(parseInt(evt.currentTarget.value));
-            // }}
-            ref={ageRef}
-          ></input>
+          <input type="number" ref={ageRef}></input>
           <div>Address:</div>
-          <select /*value={address} onChange={changeAddress}*/ ref={addressRef}>
+          <select ref={addressRef}>
             {ADDRESSLIST.map((addr, idx) => (
               <option key={idx}>{addr}</option>
             ))}
