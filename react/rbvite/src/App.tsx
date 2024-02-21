@@ -5,6 +5,7 @@ import My, { ItemHandler } from "./components/My";
 import "./App.css";
 import { useCounter } from "./contexts/counter-context";
 import { SessionProvider, useSession } from "./contexts/session-context";
+import Effect from "./components/Effect";
 
 function App() {
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -12,6 +13,7 @@ function App() {
   const myItemControlRef = useRef<ItemHandler>(null);
   const { count, plusCount } = useCounter();
   const { session } = useSession();
+
   const H5 = forwardRef(
     ({ ss }: { ss: string }, ref: React.LegacyRef<HTMLInputElement>) => {
       return (
@@ -26,6 +28,7 @@ function App() {
   console.log("rerender");
   return (
     <SessionProvider>
+      <Effect />
       <div id="App">
         <span className="title">App</span>
         <h1 ref={titleRef}>Vite + React + TS</h1>

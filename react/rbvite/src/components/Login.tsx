@@ -5,6 +5,7 @@ import {
   FormEventHandler,
   MutableRefObject,
   forwardRef,
+  useEffect,
   useImperativeHandle,
   useRef,
 } from "react";
@@ -33,7 +34,7 @@ const Login = forwardRef(({}, ref) => {
     focusName: () => nameRef.current?.focus(),
   };
   useImperativeHandle(ref, () => handler);
-  const { count } = useCounter();
+  const { count, plusCount, minusCount } = useCounter();
 
   // const changeAddress = (e: React.ChangeEvent<HTMLSelectElement>) => {
   //   setAddress(e.currentTarget.value);
@@ -75,6 +76,11 @@ const Login = forwardRef(({}, ref) => {
     const address = addressRef.current!.value;
     login(+id, name, address, +age);
   };
+
+  useEffect(() => {
+    plusCount();
+    return () => minusCount();
+  }, []);
   return (
     <div id="Login">
       <span className="title">Login</span>

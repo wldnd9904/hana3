@@ -12,11 +12,13 @@ import {
 type CounterContextProp = {
   count: number;
   plusCount: () => void;
+  minusCount: () => void;
 };
 
 export const CounterContext = createContext<CounterContextProp>({
   count: 0,
   plusCount: () => {},
+  minusCount: () => {},
 });
 
 export const CounterProvider = ({ children }: PropsWithChildren) => {
@@ -24,8 +26,11 @@ export const CounterProvider = ({ children }: PropsWithChildren) => {
   const plusCount = () => {
     setCount((prevCount) => prevCount + 1);
   };
+  const minusCount = () => {
+    setCount((prevCount) => prevCount - 1);
+  };
   return (
-    <CounterContext.Provider value={{ count, plusCount }}>
+    <CounterContext.Provider value={{ count, plusCount, minusCount }}>
       {children}
     </CounterContext.Provider>
   );
