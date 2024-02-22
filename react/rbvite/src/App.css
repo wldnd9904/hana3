@@ -100,7 +100,7 @@ li {
   box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
     rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
   margin: 10px 0;
-  button {
+  > button {
     background-color: tomato;
     color: white;
     padding: 6px 8px;
@@ -141,11 +141,11 @@ li {
   flex-direction: row;
   align-items: center;
 
-  input {
+  > input {
     height: 1em;
     width: 5em;
   }
-  label {
+  > label {
     font-size: 0.8em;
     padding-left: 1em;
   }

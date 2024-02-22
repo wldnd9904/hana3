@@ -8,9 +8,11 @@ import {
   useEffect,
   useImperativeHandle,
   useRef,
+  useState,
 } from "react";
 import { useCounter } from "../contexts/counter-context";
 import { useSession } from "../contexts/session-context";
+import useToggle from "../hooks/toggle";
 export type LoginHandle = {
   noti: (msg: string) => void;
   focusId: () => void;
@@ -23,6 +25,7 @@ const Login = forwardRef(({}, ref) => {
   // const [name, setName] = useState("");
   // const [age, setAge] = useState(0);
   // const [address, setAddress] = useState("서울");
+  const [show, toggleShow] = useToggle();
   const idRef = useRef<HTMLInputElement | null>(null);
   const nameRef = useRef<HTMLInputElement | null>(null);
   const ageRef = useRef<HTMLInputElement | null>(null);
@@ -84,6 +87,12 @@ const Login = forwardRef(({}, ref) => {
   return (
     <div id="Login">
       <span className="title">Login</span>
+      <button
+        onClick={toggleShow}
+        style={show ? { border: "1px solid blue" } : {}}
+      >
+        {show ? "show" : "hide"}
+      </button>
       <span>count in counter-context:{count}</span>
       <form onSubmit={submitLogin}>
         <div id="loginContainer">

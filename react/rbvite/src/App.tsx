@@ -61,6 +61,7 @@ function App() {
             My - 메시지 설정
           </button>
         </div>
+        <h2>count: {count}</h2>
         <My ref={myItemControlRef} />
         <button
           onClick={() => {
@@ -70,6 +71,7 @@ function App() {
           H5내용 읽어오기
         </button>
         <H5 ss={"ss"} ref={inpRef}></H5>
+
         <Hello name="홍길동" age={30 + count} plusCount={plusCount}>
           <h3>반갑습니다(App에서 넣음)</h3>
         </Hello>
