@@ -58,6 +58,19 @@ select {
     color: yellowgreen;
   }
 }
+#Effect {
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid rgb(41, 163, 7);
+  padding: 5px;
+  width: 300px;
+  margin-bottom: 30px;
+  .title {
+    color: rgb(41, 163, 7);
+  }
+}
 #My {
   margin-top: 1em;
   display: flex;

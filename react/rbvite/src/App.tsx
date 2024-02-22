@@ -1,18 +1,28 @@
 // src/App.tsx
-import { forwardRef, useRef } from "react";
+import { forwardRef, useLayoutEffect, useRef, useState } from "react";
 import Hello from "./components/Hello";
 import My, { ItemHandler } from "./components/My";
 import "./App.css";
 import { useCounter } from "./contexts/counter-context";
 import { SessionProvider, useSession } from "./contexts/session-context";
 import Effect from "./components/Effect";
+import { Position } from "./type";
 
 function App() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const inpRef = useRef<HTMLInputElement>(null);
   const myItemControlRef = useRef<ItemHandler>(null);
   const { count, plusCount } = useCounter();
+  const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
   const { session } = useSession();
+  const catchMousePosition = ({ x, y }: Position) => {
+    setPosition({ x, y });
+  };
+  useLayoutEffect(() => {
+    // ← 만약 useEffect로 하면?? 거의(컴이 빠르면 찰나의 차이) 동일
+    window.addEventListener("mousemove", catchMousePosition);
+    return () => window.removeEventListener("mousemove", catchMousePosition);
+  });
 
   const H5 = forwardRef(
     ({ ss }: { ss: string }, ref: React.LegacyRef<HTMLInputElement>) => {
@@ -28,6 +38,7 @@ function App() {
   console.log("rerender");
   return (
     <SessionProvider>
+      <small>{JSON.stringify(position)}</small>
       <Effect />
       <div id="App">
         <span className="title">App</span>
