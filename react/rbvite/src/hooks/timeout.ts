@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 const useTimer = () => {
   return {
@@ -94,6 +94,7 @@ function useTimer3(): {
   let cachedArgs: any[];
   let cachedMs: number;
   let timer: ReturnType<typeof setTimeout> | undefined;
+
   return {
     reset() {
       if (timer) clearTimeout(timer);
@@ -132,3 +133,56 @@ function useTimer3(): {
 }
 
 export { useTimer, useTimer2, useTimer3 };
+
+function useTimer4(): {
+  reset: () => void;
+  clear: () => void;
+  useTimeout: (
+    cb: TimerHandler,
+    ms: number,
+    dependencies: unknown[],
+    ...args: any[]
+  ) => void;
+} {
+  let timerRef = useRef<ReturnType<typeof setTimeout>>();
+  let cbRef = useRef<TimerHandler>();
+  let argsRef = useRef<any[]>();
+  let msRef = useRef<number>();
+  const reset = useCallback(() => {
+    clear();
+    if (cbRef.current && msRef.current && argsRef.current)
+      timerRef.current = setTimeout(
+        cbRef.current,
+        msRef.current,
+        ...argsRef.current
+      );
+  }, []);
+  const clear = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+  }, []);
+  const useTimeout = (
+    cb: TimerHandler,
+    ms: number = 0,
+    dependencies: unknown[] = [],
+    ...args: any[]
+  ) => {
+    useCallback(() => {
+      clear();
+      cbRef.current = cb;
+      argsRef.current = args;
+      msRef.current = ms;
+      useEffect(() => {
+        let timer = setTimeout(cb, ms, ...args);
+        timerRef.current = timer;
+        return () => {
+          clearTimeout(timer);
+        };
+      }, []);
+    }, [dependencies])();
+  };
+  return { reset, clear, useTimeout };
+}
+
+export { useTimer4 };
