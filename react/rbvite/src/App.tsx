@@ -7,22 +7,14 @@ import { useCounter } from "./contexts/counter-context";
 import { SessionProvider, useSession } from "./contexts/session-context";
 import Effect from "./components/Effect";
 import { Position } from "./type";
+import { MouseCapturer } from "./components/MouseCapturer";
 
 function App() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const inpRef = useRef<HTMLInputElement>(null);
   const myItemControlRef = useRef<ItemHandler>(null);
   const { count, plusCount } = useCounter();
-  const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
   const { session } = useSession();
-  const catchMousePosition = ({ x, y }: Position) => {
-    setPosition({ x, y });
-  };
-  useLayoutEffect(() => {
-    // ← 만약 useEffect로 하면?? 거의(컴이 빠르면 찰나의 차이) 동일
-    window.addEventListener("mousemove", catchMousePosition);
-    return () => window.removeEventListener("mousemove", catchMousePosition);
-  });
 
   const H5 = forwardRef(
     ({ ss }: { ss: string }, ref: React.LegacyRef<HTMLInputElement>) => {
@@ -38,23 +30,22 @@ function App() {
   console.log("rerender");
   return (
     <SessionProvider>
-      <small>{JSON.stringify(position)}</small>
-      <Effect />
       <div id="App">
         <span className="title">App</span>
+        <Effect />
         <h1 ref={titleRef}>Vite + React + TS</h1>
         <div
-          style={{ display: "grid", gridTemplateColumns: "180px 180px 180px" }}
+          style={{ display: "grid", gridTemplateColumns: "130px 130px 130px" }}
         >
           <button
             onClick={() => myItemControlRef.current?.loginHandler.focusId()}
           >
-            Login - ID 포커스
+            Login - ID
           </button>{" "}
           <button
             onClick={() => myItemControlRef.current?.loginHandler.focusName()}
           >
-            Login - 이름 포커스
+            Login - 이름
           </button>{" "}
           <button
             onClick={() => myItemControlRef.current?.loginHandler.noti("ㅎㅇ")}

@@ -30,7 +30,7 @@ select {
   border: 2px solid cadetblue;
   padding: 5px;
   margin-bottom: 30px;
-  .title {
+  > .title {
     color: cadetblue;
   }
 }
@@ -42,7 +42,7 @@ select {
   border: 2px solid rgb(255, 86, 201);
   padding: 5px;
   margin-bottom: 30px;
-  .title {
+  > .title {
     color: rgb(255, 86, 201) !important;
   }
 }
@@ -54,8 +54,20 @@ select {
   border: 2px solid yellowgreen;
   padding: 5px;
   margin-bottom: 30px;
-  .title {
+  > .title {
     color: yellowgreen;
+  }
+}
+#Profile {
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid darkorchid;
+  padding: 5px;
+  margin-bottom: 30px;
+  > .title {
+    color: darkorchid;
   }
 }
 #Effect {
@@ -67,7 +79,7 @@ select {
   padding: 5px;
   width: 300px;
   margin-bottom: 30px;
-  .title {
+  > .title {
     color: rgb(41, 163, 7);
   }
 }
@@ -79,7 +91,7 @@ select {
   border: 2px solid red;
   padding: 5px;
   margin-bottom: 30px;
-  .title {
+  > .title {
     color: red;
   }
 }
@@ -90,8 +102,19 @@ select {
   align-items: center;
   border: 2px solid blue;
   padding: 5px;
-  .title {
+  > .title {
     color: blue;
+  }
+}
+#Posts {
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px solid darkolivegreen;
+  padding: 5px;
+  > .title {
+    color: darkolivegreen;
   }
 }
 ul {

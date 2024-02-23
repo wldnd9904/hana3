@@ -11,7 +11,15 @@ export type LoginUser = {
 };
 export type Cart = { id: number; name: string; price: number };
 
-type Position = {
+export type Position = {
   x: number;
   y: number;
+};
+
+export type Post = {
+  useId: number;
+  id: number;
+  title: string;
+  body?: string;
+  content?: string;
 };
