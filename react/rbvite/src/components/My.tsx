@@ -16,8 +16,7 @@ const My = forwardRef(({}, ref: Ref<ItemHandler>) => {
   const itemPriceRef = useRef<HTMLInputElement | null>(null);
   const itemIDRef = useRef<HTMLInputElement | null>(null);
   const loginHandlerRef = useRef<LoginHandle>(null);
-  const { session, removeItem, changeItem, addItem } = useSession();
-  const sum = session.cart.reduce((sum, next) => (sum += next.price), 0);
+  const { session, removeItem, changeItem, addItem, totalPrice } = useSession();
   const itemHandler: ItemHandler = {
     notify: (msg) => {
       setMessage(msg);
@@ -57,7 +56,7 @@ const My = forwardRef(({}, ref: Ref<ItemHandler>) => {
       <div className="title">My</div>
       <span>{message}</span>
       {session.loginUser ? <Profile /> : <Login ref={loginHandlerRef} />}
-      <label>합계: {sum.toLocaleString()}원</label>
+      <label>합계: {totalPrice.toLocaleString()}원</label>
       <ul>
         {session.loginUser &&
           session.cart.map((item) => (

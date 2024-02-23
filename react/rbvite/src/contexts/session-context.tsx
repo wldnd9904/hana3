@@ -6,6 +6,8 @@ import {
   useLayoutEffect,
   useEffect,
   useCallback,
+  useReducer,
+  useMemo,
 } from "react";
 import { Session, Cart } from "../type";
 
@@ -16,6 +18,7 @@ type SessionContextProp = {
   removeItem: (id: number) => void;
   changeItem: (newItem: Cart) => void;
   addItem: (item: { id: number | null; name: string; price: number }) => void;
+  totalPrice: number;
 };
 
 const SampleSession = {
@@ -30,10 +33,17 @@ const SessionContext = createContext<SessionContextProp>({
   removeItem: () => {},
   changeItem: () => {},
   addItem: () => {},
+  totalPrice: 0,
 });
 
 export const SessionProvider = ({ children }: PropsWithChildren) => {
   const [session, setSession] = useState<Session>(SampleSession);
+
+  const totalPrice = useMemo(
+    () => session.cart.reduce((sum, item) => sum + item.price, 0),
+    [session.cart]
+  );
+
   const login = useCallback(
     (id: number, name: string, address: string, age: number) => {
       if (name.trim().length == 0) return;
@@ -86,7 +96,15 @@ export const SessionProvider = ({ children }: PropsWithChildren) => {
 
   return (
     <SessionContext.Provider
-      value={{ session, login, logout, removeItem, changeItem, addItem }}
+      value={{
+        session,
+        login,
+        logout,
+        removeItem,
+        changeItem,
+        addItem,
+        totalPrice,
+      }}
     >
       {children}
     </SessionContext.Provider>
