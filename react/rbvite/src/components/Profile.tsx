@@ -1,17 +1,20 @@
 import { useSession } from "../contexts/session-context";
+import Posts from "./Posts";
 
 const Profile = () => {
   const { session, logout } = useSession();
   return (
-    <>
-      <span style={{ fontWeight: "bold" }}>{`${session.loginUser!.name}(${
-        session.loginUser!.age
-      })`}</span>
-      <span>{`(ID:${session.loginUser!.id}, Addr:${
+    <div id="Profile">
+      <div className="title">Profile</div>
+      <span style={{ fontWeight: "bold" }}>{`#${session.loginUser!.id}: ${
+        session.loginUser!.name
+      }`}</span>
+      <span>{`(Age: ${session.loginUser!.age}, Addr: ${
         session.loginUser!.address
       })`}</span>
       <button onClick={logout}>Logout</button>
-    </>
+      <Posts />
+    </div>
   );
 };
 export default Profile;
