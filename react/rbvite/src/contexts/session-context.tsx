@@ -3,11 +3,10 @@ import {
   PropsWithChildren,
   useState,
   useContext,
-  useLayoutEffect,
   useEffect,
   useCallback,
-  useReducer,
   useMemo,
+  useReducer,
 } from "react";
 import { Session, Cart } from "../type";
 
@@ -21,7 +20,7 @@ type SessionContextProp = {
   totalPrice: number;
 };
 
-const SampleSession = {
+const SampleSession: Session = {
   loginUser: { id: 1, name: "Hong", address: "서울", age: 20 },
   cart: [],
 };
@@ -36,8 +35,75 @@ const SessionContext = createContext<SessionContextProp>({
   totalPrice: 0,
 });
 
+type SessionActionType =
+  | "login"
+  | "logout"
+  | "removeItem"
+  | "changeItem"
+  | "addItem"
+  | "setItem";
+
+type SessionPayloadType = {
+  id?: number;
+  name?: string;
+  address?: string;
+  age?: number;
+  price?: number;
+  cart?: Cart[];
+};
+
+type Action = { type: SessionActionType; payload: SessionPayloadType };
+
 export const SessionProvider = ({ children }: PropsWithChildren) => {
-  const [session, setSession] = useState<Session>(SampleSession);
+  const [session, dispatch] = useReducer(
+    (s: Session, { type, payload }: Action): Session => {
+      switch (type) {
+        case "login":
+          return {
+            ...s,
+            loginUser: {
+              id: payload.id!,
+              name: payload.name!,
+              address: payload.address!,
+              age: payload.age!,
+            },
+          };
+        case "logout":
+          return { ...s, loginUser: null };
+        case "addItem":
+          return {
+            ...s,
+            cart: [
+              ...s.cart,
+              { id: payload.id!, name: payload.name!, price: payload.price! },
+            ],
+          };
+        case "removeItem":
+          return {
+            ...s,
+            cart: s.cart.filter((item) => item.id != payload.id!),
+          };
+        case "changeItem":
+          return {
+            ...s,
+            cart: s.cart.map((item) =>
+              item.id == payload.id!
+                ? {
+                    id: payload.id!,
+                    name: payload.name!,
+                    price: payload.price!,
+                  }
+                : item
+            ),
+          };
+        case "setItem":
+          return { ...s, cart: payload.cart! };
+        default:
+          return s;
+      }
+    },
+    SampleSession
+  );
 
   const totalPrice = useMemo(
     () => session.cart.reduce((sum, item) => sum + item.price, 0),
@@ -47,37 +113,27 @@ export const SessionProvider = ({ children }: PropsWithChildren) => {
   const login = useCallback(
     (id: number, name: string, address: string, age: number) => {
       if (name.trim().length == 0) return;
-      else
-        setSession((s) => ({
-          loginUser: { id, name, address, age },
-          cart: s.cart,
-        }));
+      dispatch({ type: "login", payload: { id, name, address, age } });
     },
     []
   );
   const logout = useCallback(() => {
-    setSession((s) => ({ loginUser: null, cart: s.cart }));
+    dispatch({ type: "logout", payload: {} });
   }, []);
   const removeItem = useCallback((id: number) => {
-    setSession((s) => ({
-      ...s,
-      cart: s.cart.filter((item) => item.id != id),
-    }));
+    dispatch({ type: "removeItem", payload: { id: id } });
   }, []);
   const changeItem = useCallback((newItem: Cart) => {
-    setSession((s) => ({
-      ...s,
-      cart: s.cart.map((item) => (item.id == newItem.id ? newItem : item)),
-    }));
+    dispatch({ type: "changeItem", payload: { ...newItem } });
   }, []);
   const addItem = useCallback(
     (item: { id: number | null; name: string; price: number }) => {
       if (!item.id)
         item.id = Math.max(...session.cart.map((item) => item.id), 0) + 1;
-      setSession((s) => ({
-        ...s,
-        cart: [...s.cart, { ...item, id: item.id! }],
-      }));
+      dispatch({
+        type: "addItem",
+        payload: { id: item.id!, name: item.name, price: item.price },
+      });
     },
     []
   );
@@ -87,7 +143,9 @@ export const SessionProvider = ({ children }: PropsWithChildren) => {
     console.log("fetch");
     fetch("/sample.json", { signal })
       .then((res) => res.json())
-      .then(setSession)
+      .then((session) => {
+        dispatch({ type: "setItem", payload: { ...session } });
+      })
       .catch(console.log);
     return () => {
       controller.abort();
