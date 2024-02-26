@@ -1,3 +1,13 @@
+import { useEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useTimeout5 } from "./hooks/timeout";
+
 export const NotFound = () => {
-  return <div>페이지를 찾을 수 없습니다!</div>;
+  const navigate = useNavigate();
+  useTimeout5(() => navigate(-1), 1500);
+  return (
+    <div className="text-red-500">
+      {location.pathname} 페이지를 찾을 수 없습니다!
+    </div>
+  );
 };

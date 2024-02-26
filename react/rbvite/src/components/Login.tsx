@@ -13,6 +13,7 @@ import {
 import { useCounter } from "../contexts/counter-context";
 import { useSession } from "../contexts/session-context";
 import useToggle from "../hooks/toggle";
+import { useNavigate } from "react-router-dom";
 export type LoginHandle = {
   noti: (msg: string) => void;
   focusId: () => void;
@@ -31,6 +32,7 @@ const Login = forwardRef(({}, ref) => {
   const ageRef = useRef<HTMLInputElement | null>(null);
   const addressRef = useRef<HTMLSelectElement | null>(null);
   const { login } = useSession();
+  const navigate = useNavigate();
   const handler = {
     noti: (msg: string) => alert(msg),
     focusId: () => idRef.current?.focus(),
@@ -79,11 +81,10 @@ const Login = forwardRef(({}, ref) => {
     const address = addressRef.current!.value;
     login({ id: +id, name, address, age: +age });
   };
-
+  const { session } = useSession();
   useEffect(() => {
-    plusCount();
-    return () => minusCount();
-  }, []);
+    if (session.loginUser) navigate("/my");
+  }, [session]);
   return (
     <div id="Login">
       <span className="title">Login</span>
