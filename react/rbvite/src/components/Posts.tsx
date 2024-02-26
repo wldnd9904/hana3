@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSession } from "../contexts/session-context";
 import { FaAngleUp, FaAngleRight } from "react-icons/fa";
 import useToggle from "../hooks/toggle";
@@ -46,8 +46,10 @@ export default function Posts() {
     session: { loginUser },
   } = useSession();
   const [posts, setPosts] = useState<Post[]>([]);
-  const { data, error, isLoading } = useFetch<Post[]>(postURL(loginUser!.id));
+  const url = useMemo(() => postURL(loginUser!.id), [loginUser?.id]);
+  const { data, error, isLoading } = useFetch<Post[]>(url);
   useEffect(() => {
+    console.log(data);
     if (data) setPosts(data);
   }, [data]);
   return (
