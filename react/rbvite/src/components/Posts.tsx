@@ -4,6 +4,7 @@ import { FaAngleUp, FaAngleRight } from "react-icons/fa";
 import useToggle from "../hooks/toggle";
 import { Post } from "../type";
 import { useFetch } from "../hooks/fetch";
+import clsx from "clsx";
 
 const BASE_URL = "https://koreanjson.com";
 const postURL = (id: number) => `${BASE_URL}/posts?userId=${id}`;
@@ -11,7 +12,10 @@ const postURL = (id: number) => `${BASE_URL}/posts?userId=${id}`;
 const PostItem = ({ post }: { post: Post }) => {
   const [open, toggleOpen] = useToggle();
   return (
-    <li style={{ textAlign: "start" }}>
+    <li
+      className={clsx(open && "border", "border-green-300")}
+      style={{ textAlign: "start" }}
+    >
       <div style={{ width: "100%" }}>
         <div
           style={{

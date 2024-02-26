@@ -35,7 +35,7 @@ function App() {
         <span className="title">App</span>
         <Effect />
         <h1 ref={titleRef}>Vite + React + TS</h1>
-        <DeferTrans />
+        {/* <DeferTrans /> */}
         <div
           style={{ display: "grid", gridTemplateColumns: "130px 130px 130px" }}
         >
