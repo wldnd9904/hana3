@@ -8,6 +8,7 @@ import { SessionProvider, useSession } from "./contexts/session-context";
 import Effect from "./components/Effect";
 import { Position } from "./type";
 import { MouseCapturer } from "./components/MouseCapturer";
+import DeferTrans from "./components/DeferTrans";
 
 function App() {
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -34,6 +35,7 @@ function App() {
         <span className="title">App</span>
         <Effect />
         <h1 ref={titleRef}>Vite + React + TS</h1>
+        <DeferTrans />
         <div
           style={{ display: "grid", gridTemplateColumns: "130px 130px 130px" }}
         >

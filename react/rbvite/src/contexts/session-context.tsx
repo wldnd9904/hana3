@@ -1,12 +1,5 @@
-import {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useEffect,
-  useCallback,
-  useMemo,
-  useReducer,
-} from "react";
+import { createContext, PropsWithChildren, useContext, useEffect } from "react";
+import { useCallback, useMemo, useReducer } from "react";
 import { Session, Cart, LoginUser } from "../type";
 import { useFetch } from "../hooks/fetch";
 
@@ -19,12 +12,7 @@ type SessionContextProp = {
   addItem: (item: Omit<Cart, "id"> & Partial<Cart>) => void;
   totalPrice: number;
 };
-
-const SampleSession: Session = {
-  loginUser: { id: 1, name: "Hong", address: "서울", age: 20 },
-  cart: [],
-};
-
+const SampleSession = { loginUser: null, cart: [] };
 const SessionContext = createContext<SessionContextProp>({
   session: SampleSession,
   login: () => {},
@@ -49,7 +37,7 @@ const reducer = (s: Session, { type, payload }: Action): Session => {
       return { ...s, loginUser: payload };
     case "addItem":
       const newItem = { ...payload };
-      if (newItem.id)
+      if (!newItem.id)
         newItem.id = Math.max(...s.cart.map((item) => item.id), 0) + 1;
       return { ...s, cart: [...s.cart, newItem as Cart] };
     case "removeItem":
