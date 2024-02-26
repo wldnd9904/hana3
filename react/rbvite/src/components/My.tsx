@@ -43,9 +43,9 @@ const My = forwardRef(({}, ref: Ref<ItemHandler>) => {
       return;
     }
     addItem({
+      id: itemIDRef.current!.value ? +itemIDRef.current!.value : undefined,
       name: itemNameRef.current.value,
       price: +itemPriceRef.current.value,
-      id: itemIDRef.current!.value ? +itemIDRef.current!.value : null,
     });
     itemNameRef.current!.value = "";
     itemPriceRef.current!.value = "";

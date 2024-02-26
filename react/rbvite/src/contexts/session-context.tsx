@@ -1,22 +1,22 @@
 import {
   createContext,
   PropsWithChildren,
-  useState,
   useContext,
   useEffect,
   useCallback,
   useMemo,
   useReducer,
 } from "react";
-import { Session, Cart } from "../type";
+import { Session, Cart, LoginUser } from "../type";
+import { useFetch } from "../hooks/fetch";
 
 type SessionContextProp = {
   session: Session;
-  login: (id: number, name: string, address: string, age: number) => void;
+  login: (loginUser: LoginUser) => void;
   logout: () => void;
   removeItem: (id: number) => void;
   changeItem: (newItem: Cart) => void;
-  addItem: (item: { id: number | null; name: string; price: number }) => void;
+  addItem: (item: Omit<Cart, "id"> & Partial<Cart>) => void;
   totalPrice: number;
 };
 
@@ -35,122 +35,59 @@ const SessionContext = createContext<SessionContextProp>({
   totalPrice: 0,
 });
 
-type SessionActionType =
-  | "login"
-  | "logout"
-  | "removeItem"
-  | "changeItem"
-  | "addItem"
-  | "setItem";
+type Action =
+  | { type: "login" | "logout"; payload: LoginUser | null }
+  | { type: "removeItem"; payload: number }
+  | { type: "addItem"; payload: Omit<Cart, "id"> & Partial<Cart> }
+  | { type: "changeItem"; payload: Cart }
+  | { type: "set"; payload: Session };
 
-type SessionPayloadType = {
-  id?: number;
-  name?: string;
-  address?: string;
-  age?: number;
-  price?: number;
-  cart?: Cart[];
+const reducer = (s: Session, { type, payload }: Action): Session => {
+  switch (type) {
+    case "login":
+    case "logout":
+      return { ...s, loginUser: payload };
+    case "addItem":
+      const newItem = { ...payload };
+      if (newItem.id)
+        newItem.id = Math.max(...s.cart.map((item) => item.id), 0) + 1;
+      return { ...s, cart: [...s.cart, newItem as Cart] };
+    case "removeItem":
+      return { ...s, cart: s.cart.filter((item) => item.id != payload) };
+    case "changeItem":
+      const newCart = s.cart.map((it) => (it.id == payload.id ? payload : it));
+      return { ...s, cart: newCart };
+    case "set":
+      return payload;
+  }
 };
-
-type Action = { type: SessionActionType; payload: SessionPayloadType };
-
 export const SessionProvider = ({ children }: PropsWithChildren) => {
-  const [session, dispatch] = useReducer(
-    (s: Session, { type, payload }: Action): Session => {
-      switch (type) {
-        case "login":
-          return {
-            ...s,
-            loginUser: {
-              id: payload.id!,
-              name: payload.name!,
-              address: payload.address!,
-              age: payload.age!,
-            },
-          };
-        case "logout":
-          return { ...s, loginUser: null };
-        case "addItem":
-          return {
-            ...s,
-            cart: [
-              ...s.cart,
-              { id: payload.id!, name: payload.name!, price: payload.price! },
-            ],
-          };
-        case "removeItem":
-          return {
-            ...s,
-            cart: s.cart.filter((item) => item.id != payload.id!),
-          };
-        case "changeItem":
-          return {
-            ...s,
-            cart: s.cart.map((item) =>
-              item.id == payload.id!
-                ? {
-                    id: payload.id!,
-                    name: payload.name!,
-                    price: payload.price!,
-                  }
-                : item
-            ),
-          };
-        case "setItem":
-          return { ...s, cart: payload.cart! };
-        default:
-          return s;
-      }
-    },
-    SampleSession
-  );
-
+  const [session, dispatch] = useReducer(reducer, SampleSession);
   const totalPrice = useMemo(
     () => session.cart.reduce((sum, item) => sum + item.price, 0),
     [session.cart]
   );
 
-  const login = useCallback(
-    (id: number, name: string, address: string, age: number) => {
-      if (name.trim().length == 0) return;
-      dispatch({ type: "login", payload: { id, name, address, age } });
-    },
-    []
-  );
+  const login = useCallback((loginUser: LoginUser) => {
+    dispatch({ type: "login", payload: loginUser });
+  }, []);
   const logout = useCallback(() => {
-    dispatch({ type: "logout", payload: {} });
+    dispatch({ type: "logout", payload: null });
   }, []);
   const removeItem = useCallback((id: number) => {
-    dispatch({ type: "removeItem", payload: { id: id } });
+    dispatch({ type: "removeItem", payload: id });
   }, []);
   const changeItem = useCallback((newItem: Cart) => {
-    dispatch({ type: "changeItem", payload: { ...newItem } });
+    dispatch({ type: "changeItem", payload: newItem });
   }, []);
-  const addItem = useCallback(
-    (item: { id: number | null; name: string; price: number }) => {
-      if (!item.id)
-        item.id = Math.max(...session.cart.map((item) => item.id), 0) + 1;
-      dispatch({
-        type: "addItem",
-        payload: { id: item.id!, name: item.name, price: item.price },
-      });
-    },
-    []
-  );
+  const addItem = useCallback((item: Omit<Cart, "id"> & Partial<Cart>) => {
+    dispatch({ type: "addItem", payload: item });
+  }, []);
+
+  const { data } = useFetch<Session>("/sample.json");
   useEffect(() => {
-    const controller = new AbortController();
-    const { signal } = controller;
-    console.log("fetch");
-    fetch("/sample.json", { signal })
-      .then((res) => res.json())
-      .then((session) => {
-        dispatch({ type: "setItem", payload: { ...session } });
-      })
-      .catch(console.log);
-    return () => {
-      controller.abort();
-    };
-  }, []);
+    if (data) dispatch({ type: "set", payload: data });
+  }, [data]);
 
   return (
     <SessionContext.Provider

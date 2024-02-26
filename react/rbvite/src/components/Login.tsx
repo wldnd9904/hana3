@@ -77,7 +77,7 @@ const Login = forwardRef(({}, ref) => {
     const name = nameRef.current!.value;
     const age = ageRef.current!.value;
     const address = addressRef.current!.value;
-    login(+id, name, address, +age);
+    login({ id: +id, name, address, age: +age });
   };
 
   useEffect(() => {

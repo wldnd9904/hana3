@@ -49,7 +49,6 @@ export default function Posts() {
   const url = useMemo(() => postURL(loginUser!.id), [loginUser?.id]);
   const { data, error, isLoading } = useFetch<Post[]>(url);
   useEffect(() => {
-    console.log(data);
     if (data) setPosts(data);
   }, [data]);
   return (
