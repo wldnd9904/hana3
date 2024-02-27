@@ -1,9 +1,8 @@
-import { PropsWithChildren } from "react";
 import { NavLink } from "react-router-dom";
 
 const Nav = () => {
   return (
-    <nav className="flex-row flex justify-between border-blue-500 border p-1 mb-10">
+    <nav className="flex-row flex justify-between border-blue-500 border p-1 mb-10  mx-auto">
       <NavLink
         to="/"
         style={({ isActive }) => (isActive ? { color: "red" } : {})}

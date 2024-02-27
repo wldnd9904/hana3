@@ -10,6 +10,8 @@ import Posts from "./components/Posts";
 import Home from "./components/Home";
 import DeferTrans from "./components/DeferTrans";
 import PostItem from "./components/PostItem";
+import PostLayout from "./components/PostsLayout";
+import PostDetail from "./components/PostDetail";
 
 function App() {
   console.log("rerender");
@@ -22,7 +24,12 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/my" element={<My />} />
-          <Route path="/posts">
+          <Route path="/posts" element={<PostLayout />}>
+            <Route index />
+            <Route path=":id" element={<PostDetail />} />
+          </Route>
+
+          <Route path="/post">
             <Route index element={<Posts />} />
             <Route path=":id" element={<PostItem />} />
           </Route>

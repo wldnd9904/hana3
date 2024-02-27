@@ -23,15 +23,16 @@ select {
   margin-bottom: 20px;
 }
 #App {
-  margin-top: 1em;
+  /* margin-top: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
   border: 2px solid cadetblue;
   padding: 5px;
-  margin-bottom: 30px;
+  margin-bottom: 30px; */
   > .title {
-    color: cadetblue;
+    display: none;
+    /* color: cadetblue; */
   }
 }
 #Login {

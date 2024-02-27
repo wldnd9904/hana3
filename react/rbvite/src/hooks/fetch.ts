@@ -8,7 +8,10 @@ export function useFetch<T>(url: string) {
     const controller = new AbortController();
     const { signal } = controller;
     fetch(url, { signal })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error(`error code ${res.status}`);
+        return res.json();
+      })
       .then((json) => {
         setError("");
         setData(json as T);
