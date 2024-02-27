@@ -8,6 +8,8 @@ import { NotFound } from "./NotFound";
 import Login from "./components/Login";
 import Posts from "./components/Posts";
 import Home from "./components/Home";
+import DeferTrans from "./components/DeferTrans";
+import PostItem from "./components/PostItem";
 
 function App() {
   console.log("rerender");
@@ -20,9 +22,13 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/my" element={<My />} />
-          <Route path="/posts" element={<Posts />} />
+          <Route path="/posts">
+            <Route index element={<Posts />} />
+            <Route path=":id" element={<PostItem />} />
+          </Route>
           <Route path="/items" element={<My />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/defertrans" element={<DeferTrans />} />
         </Routes>
       </div>
     </SessionProvider>

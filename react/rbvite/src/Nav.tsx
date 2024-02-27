@@ -1,15 +1,46 @@
-import { Link } from "react-router-dom";
+import { PropsWithChildren } from "react";
+import { NavLink } from "react-router-dom";
 
 const Nav = () => {
   return (
     <nav className="flex-row flex justify-between border-blue-500 border p-1 mb-10">
-      <Link to="/" replace>
+      <NavLink
+        to="/"
+        style={({ isActive }) => (isActive ? { color: "red" } : {})}
+        replace
+      >
         Home
-      </Link>
-      <Link to="/login">Login</Link>
-      <Link to="/my">My</Link>
-      <Link to="/posts">Posts</Link>
-      <Link to="/hello">About</Link>
+      </NavLink>
+      <NavLink
+        to="/login"
+        style={({ isActive }) => (isActive ? { color: "red" } : {})}
+      >
+        Login
+      </NavLink>
+      <NavLink
+        to="/my"
+        style={({ isActive }) => (isActive ? { color: "red" } : {})}
+      >
+        My
+      </NavLink>
+      <NavLink
+        to="/posts"
+        style={({ isActive }) => (isActive ? { color: "red" } : {})}
+      >
+        Posts
+      </NavLink>
+      <NavLink
+        to="/defertrans"
+        style={({ isActive }) => (isActive ? { color: "red" } : {})}
+      >
+        Defer
+      </NavLink>
+      <NavLink
+        to="/sample"
+        style={({ isActive }) => (isActive ? { color: "red" } : {})}
+      >
+        sample
+      </NavLink>
     </nav>
   );
 };
