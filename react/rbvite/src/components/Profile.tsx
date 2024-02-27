@@ -1,5 +1,5 @@
 import { useSession } from "../contexts/session-context";
-import Posts from "./Posts";
+import Posts from "./Post/Posts";
 
 const Profile = () => {
   const { session, logout } = useSession();

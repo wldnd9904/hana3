@@ -63,8 +63,8 @@ const My = forwardRef(({}, ref: Ref<ItemHandler>) => {
             <Item
               item={item}
               key={item.id}
-              onRemove={removeItem}
-              onChange={changeItem}
+              // onRemove={removeItem}
+              // onChange={changeItem}
             />
           ))}
       </ul>

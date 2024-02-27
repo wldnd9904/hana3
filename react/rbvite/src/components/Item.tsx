@@ -1,20 +1,22 @@
 import { useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { Cart } from "../type";
+import { useSession } from "../contexts/session-context";
 
 type ItemProps = {
-  item: Cart;
-  onRemove: (id: number) => void;
-  onChange: (item: Cart) => void;
+  item?: Cart;
+  // onRemove: (id: number) => void;
+  // onChange: (item: Cart) => void;
 };
 
-function Item({ item, onRemove, onChange }: ItemProps) {
+function Item({ item /*onRemove, onChange*/ }: ItemProps) {
   const [editting, setEditting] = useState(false);
   const nameRef = useRef<HTMLInputElement | null>(null);
   const priceRef = useRef<HTMLInputElement | null>(null);
+  const { changeItem, removeItem } = useSession();
   const toggleEdit = () => {
-    if (editting) {
-      onChange({
+    if (editting && item) {
+      changeItem({
         id: item.id,
         name: nameRef.current!.value,
         price: +priceRef.current!.value,
@@ -23,11 +25,14 @@ function Item({ item, onRemove, onChange }: ItemProps) {
     flushSync(() => {
       setEditting((b) => !b);
     });
-    if (!editting) {
+    if (!editting && item) {
       nameRef.current!.value = item.name;
       priceRef.current!.value = `${item.price}`;
     }
   };
+  if (!item) {
+    return <>no item </>;
+  }
   return (
     <li key={item.id}>
       <span className="id">{item.id}</span>
@@ -48,7 +53,7 @@ function Item({ item, onRemove, onChange }: ItemProps) {
       </button>
       <button
         onClick={() => {
-          onRemove(item.id);
+          removeItem(item.id);
         }}
       >
         X
