@@ -1,10 +1,3 @@
-import { useEffect, useMemo, useState } from "react";
-import { useSession } from "../contexts/session-context";
-import { FaAngleUp, FaAngleRight } from "react-icons/fa";
-import useToggle from "../hooks/toggle";
-import { Post } from "../type";
-import { useFetch } from "../hooks/fetch";
-import clsx from "clsx";
 import {
   useLocation,
   useNavigate,
@@ -12,6 +5,10 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import PostItem from "./PostItem";
+import { useEffect, useState, useMemo } from "react";
+import { useSession } from "../../contexts/session-context";
+import { useFetch } from "../../hooks/fetch";
+import { Post } from "../../type";
 
 const BASE_URL = "https://koreanjson.com";
 const postURL = (id: number) => `${BASE_URL}/posts?userId=${id}`;

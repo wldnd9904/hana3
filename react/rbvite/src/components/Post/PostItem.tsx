@@ -1,10 +1,10 @@
 import clsx from "clsx";
 import { FaAngleUp, FaAngleRight } from "react-icons/fa";
-import useToggle from "../hooks/toggle";
-import { Post } from "../type";
 import { useEffect, useState } from "react";
-import { useFetch } from "../hooks/fetch";
 import { useParams } from "react-router-dom";
+import { useFetch } from "../../hooks/fetch";
+import useToggle from "../../hooks/toggle";
+import { Post } from "../../type";
 
 const DefaultPost: Post = {
   userId: 0,

@@ -1,8 +1,9 @@
-import { Outlet, useNavigate } from "react-router-dom";
-import { Post } from "../type";
-import { useEffect, useMemo, useState } from "react";
-import { useSession } from "../contexts/session-context";
-import { useFetch } from "../hooks/fetch";
+import { useState, useMemo, useEffect } from "react";
+import { useNavigate, Outlet } from "react-router-dom";
+import { useSession } from "../../contexts/session-context";
+import { useFetch } from "../../hooks/fetch";
+import { Post } from "../../type";
+
 const BASE_URL = "https://koreanjson.com";
 const postURL = (id: number) => `${BASE_URL}/posts?userId=${id}`;
 

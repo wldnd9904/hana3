@@ -1,9 +1,8 @@
 import { useOutletContext, useParams } from "react-router-dom";
-import { Post } from "../type";
 import styled from "styled-components";
 import { useEffect, useLayoutEffect, useState } from "react";
-import { useFetch } from "../hooks/fetch";
-
+import { useFetch } from "../../hooks/fetch";
+import { Post } from "../../type";
 const PostContainer = styled.div`
   border-radius: 10px;
   box-shadow:
