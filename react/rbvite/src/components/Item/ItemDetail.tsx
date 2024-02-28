@@ -40,14 +40,14 @@ function ItemDetail() {
       priceRef.current!.value = `${item.price}`;
       return;
     }
-    if (id) {
+    if (id && cart.length) {
       const curItem: Cart | undefined = cart.find((item) => item.id == +id);
       if (curItem) {
         nameRef.current!.value = curItem.name;
         priceRef.current!.value = `${curItem.price}`;
       }
     }
-  }, [id]);
+  }, [id, cart]);
   const remove = () => {
     removeItem(+id!);
     navigate("/items");

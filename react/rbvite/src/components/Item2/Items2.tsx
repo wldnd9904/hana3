@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useSession } from "../../contexts/session-context";
 import { HStack, VStack } from "../Stack";
 import { Cart } from "../../type";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 
 const ItemsContainer = styled.div`
   border-radius: 10px;
@@ -26,14 +26,15 @@ const ItemsContainer = styled.div`
   }
 `;
 
+type OutletType = {
+  setOutletItem: (item: Cart) => void;
+};
+
 function Items2() {
   const {
     session: { cart },
   } = useSession();
-  const navigate = useNavigate();
-  const goItem = (item: Cart) => {
-    navigate(`/items2/${item.id}`);
-  };
+  const { setOutletItem } = useOutletContext<OutletType>();
   const { addItem } = useSession();
   const itemNameRef = useRef<HTMLInputElement | null>(null);
   const itemPriceRef = useRef<HTMLInputElement | null>(null);
@@ -64,9 +65,8 @@ function Items2() {
         {cart.map((item) => (
           <li
             key={item.id}
-            onClick={() => {
-              goItem(item);
-            }}
+            className="cursor-pointer"
+            onClick={() => setOutletItem(item)}
           >
             <span className="id">{item.id}</span>
             <span>{item.name}</span>

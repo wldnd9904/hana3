@@ -1,10 +1,4 @@
-import {
-  ChangeEvent,
-  useDeferredValue,
-  useEffect,
-  useState,
-  useTransition,
-} from "react";
+import { ChangeEvent, useState, useTransition } from "react";
 import { useDebounce } from "../hooks/debounce";
 
 type List = {

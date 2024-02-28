@@ -1,4 +1,4 @@
-import { useTimeout5, useTimer4 } from "../hooks/timeout";
+import { useTimeout5 } from "../hooks/timeout";
 import useToggle from "../hooks/toggle";
 
 function Effect() {

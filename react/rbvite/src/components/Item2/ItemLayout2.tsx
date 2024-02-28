@@ -4,6 +4,7 @@ import { useSession } from "../../contexts/session-context";
 import { Cart } from "../../type";
 import { styled } from "styled-components";
 import { HStack } from "../Stack";
+import { MdPerson } from "react-icons/md";
 
 const Items2Container = styled.div`
   border-radius: 10px;
@@ -15,16 +16,40 @@ const Items2Container = styled.div`
 `;
 
 function ItemLayout2() {
+  const navigate = useNavigate();
   const {
     session: { loginUser },
   } = useSession();
+  const [curItem, setCurItem] = useState<Cart>();
+  const setOutletItem = (item: Cart) => {
+    setCurItem(item);
+    navigate(`/items2/${item.id}`);
+  };
   return (
     <Items2Container>
       <HStack className="bg-blue-500 text-white rounded-t-xl font-bold justify-between px-4">
         <span>장바구니</span>
-        <span>{loginUser?.name}</span>
+        {loginUser ? (
+          <HStack>
+            <MdPerson />
+            {loginUser?.name}
+          </HStack>
+        ) : (
+          <a
+            className="text-white font-bold"
+            onClick={() => {
+              navigate("/login");
+            }}
+          >
+            로그인
+          </a>
+        )}
       </HStack>
-      <Outlet />
+      {loginUser ? (
+        <Outlet context={{ setOutletItem: setOutletItem, item: curItem }} />
+      ) : (
+        <div className="h-1rem">로그인 해주세요.</div>
+      )}
     </Items2Container>
   );
 }

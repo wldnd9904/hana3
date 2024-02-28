@@ -4,16 +4,16 @@ interface StackProps extends HTMLAttributes<HTMLDivElement> {
   rotated?: boolean;
 }
 
-export const HStack = (props: PropsWithChildren<StackProps>) => {
+export const VStack = (props: PropsWithChildren<StackProps>) => {
   const { children, className, rotated, ...attributes } = props;
   return (
     <div
       {...attributes}
-      className={`flex flex-${rotated ? "col" : "row"} items-center gap-1 ${className}`}
+      className={`flex flex-${rotated ? "row" : "col"} items-center gap-1 ${className}`}
     >
       {children}
     </div>
   );
 };
-export const VStack = (props: PropsWithChildren<StackProps>) =>
-  HStack({ ...props, rotated: !props.rotated });
+export const HStack = (props: PropsWithChildren<StackProps>) =>
+  VStack({ ...props, rotated: !props.rotated });

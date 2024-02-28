@@ -29,7 +29,7 @@ function PostItem({ postID }: { postID?: number }) {
     >
       <div style={{ width: "100%" }}>
         {isLoading || error ? (
-          <span>{error ? error : "Loading..."}</span>
+          <span>{isLoading ? "Loading..." : error}</span>
         ) : (
           <div
             style={{
