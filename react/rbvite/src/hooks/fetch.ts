@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Post } from "../type";
 
 export function useFetch<T>(url: string) {
   const [isLoading, setIsLoading] = useState(true);
@@ -7,20 +8,19 @@ export function useFetch<T>(url: string) {
   useEffect(() => {
     const controller = new AbortController();
     const { signal } = controller;
-    fetch(url, { signal })
-      .then((res) => {
+    (async () => {
+      try {
+        const res = await fetch(url, { signal });
         if (!res.ok) throw new Error(`error code ${res.status}`);
-        return res.json();
-      })
-      .then((json) => {
-        setError("");
+        const json = await res.json();
         setData(json as T);
+        setError("");
+      } catch (error) {
+        if (error instanceof Error) setError(error.message);
+      } finally {
         setIsLoading(false);
-      })
-      .catch((error: Error) => {
-        setError(error.message);
-        setIsLoading(false);
-      });
+      }
+    })();
     return () => controller.abort(); //강제중지
   }, [url]);
 
