@@ -42,7 +42,10 @@ const reducer = (s: Session, { type, payload }: Action): Session => {
       const newItem = { ...payload };
       if (!newItem.id)
         newItem.id = Math.max(...s.cart.map((item) => item.id), 0) + 1;
-      newer = { ...s, cart: [...s.cart, newItem as Cart] };
+      newer = {
+        ...s,
+        cart: [...s.cart, newItem as Cart].sort((a, b) => a.id - b.id),
+      };
       break;
     case "removeItem":
       newer = { ...s, cart: s.cart.filter((item) => item.id != payload) };
@@ -98,7 +101,6 @@ export const SessionProvider = ({ children }: PropsWithChildren) => {
   // useEffect(() => {
   //   if (data) dispatch({ type: "set", payload: data });
   // }, [data]);
-
   return (
     <SessionContext.Provider
       value={{
