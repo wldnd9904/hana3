@@ -12,9 +12,10 @@ type SessionContextProp = {
   addItem: (item: Omit<Cart, "id"> & Partial<Cart>) => void;
   totalPrice: number;
 };
-const SampleSession = { loginUser: null, cart: [] };
+const SKEY = "session";
+const DefaultSession = { loginUser: null, cart: [] };
 const SessionContext = createContext<SessionContextProp>({
-  session: SampleSession,
+  session: DefaultSession,
   login: () => {},
   logout: () => {},
   removeItem: () => {},
@@ -31,26 +32,47 @@ type Action =
   | { type: "set"; payload: Session };
 
 const reducer = (s: Session, { type, payload }: Action): Session => {
+  let newer: Session;
   switch (type) {
     case "login":
     case "logout":
-      return { ...s, loginUser: payload };
+      newer = { ...s, loginUser: payload };
+      break;
     case "addItem":
       const newItem = { ...payload };
       if (!newItem.id)
         newItem.id = Math.max(...s.cart.map((item) => item.id), 0) + 1;
-      return { ...s, cart: [...s.cart, newItem as Cart] };
+      newer = { ...s, cart: [...s.cart, newItem as Cart] };
+      break;
     case "removeItem":
-      return { ...s, cart: s.cart.filter((item) => item.id != payload) };
+      newer = { ...s, cart: s.cart.filter((item) => item.id != payload) };
+      break;
     case "changeItem":
       const newCart = s.cart.map((it) => (it.id == payload.id ? payload : it));
-      return { ...s, cart: newCart };
+      newer = { ...s, cart: newCart };
+      break;
     case "set":
-      return payload;
+      newer = payload;
+      break;
   }
+  setStorage(newer);
+  return newer;
 };
+
+function getStorage(): Session {
+  const storedData = localStorage.getItem(SKEY);
+  if (storedData) return JSON.parse(storedData) as Session;
+  return DefaultSession;
+}
+function setStorage(session: Session) {
+  localStorage.setItem(SKEY, JSON.stringify(session));
+}
+
 export const SessionProvider = ({ children }: PropsWithChildren) => {
-  const [session, dispatch] = useReducer(reducer, SampleSession);
+  const [session, dispatch] = useReducer(
+    reducer,
+    getStorage() ?? DefaultSession
+  );
   const totalPrice = useMemo(
     () => session.cart.reduce((sum, item) => sum + item.price, 0),
     [session.cart]
@@ -72,10 +94,10 @@ export const SessionProvider = ({ children }: PropsWithChildren) => {
     dispatch({ type: "addItem", payload: item });
   }, []);
 
-  const { data } = useFetch<Session>("/sample.json");
-  useEffect(() => {
-    if (data) dispatch({ type: "set", payload: data });
-  }, [data]);
+  // const { data } = useFetch<Session>("/sample.json");
+  // useEffect(() => {
+  //   if (data) dispatch({ type: "set", payload: data });
+  // }, [data]);
 
   return (
     <SessionContext.Provider
