@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Post } from "../type";
 
 export function useFetch<T>(url: string) {
   const [isLoading, setIsLoading] = useState(true);

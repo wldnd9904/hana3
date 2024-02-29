@@ -3,7 +3,7 @@ import { useParams, useNavigate, Outlet } from "react-router-dom";
 import { useSession } from "../../contexts/session-context";
 import { Cart } from "../../type";
 import { styled } from "styled-components";
-import { HStack } from "../Stack";
+import { HStack, VStack } from "../Stack";
 import { MdPerson } from "react-icons/md";
 
 const Items2Container = styled.div`
@@ -23,7 +23,7 @@ function ItemLayout2() {
   const [curItem, setCurItem] = useState<Cart>();
   const setOutletItem = (item: Cart) => {
     setCurItem(item);
-    navigate(`/items2/${item.id}`);
+    navigate(`./${item.id}`);
   };
   return (
     <Items2Container>

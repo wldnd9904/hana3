@@ -68,9 +68,11 @@ function Items2() {
             className="cursor-pointer"
             onClick={() => setOutletItem(item)}
           >
-            <span className="id">{item.id}</span>
-            <span>{item.name}</span>
-            <span>({item.price})</span>
+            <HStack className="justify-between w-full">
+              <span className="id">{item.id}</span>
+              <span>{item.name}</span>
+              <span>({item.price})</span>
+            </HStack>
           </li>
         ))}
       </ul>

@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useTimeout5 } from "./hooks/timeout";
 
 export const NotFound = () => {

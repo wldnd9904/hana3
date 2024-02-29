@@ -24,16 +24,15 @@ select {
 }
 #App {
   /* margin-top: 1em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 2px solid cadetblue;
-  padding: 5px;
-  margin-bottom: 30px; */
-  > .title {
-    display: none;
-    /* color: cadetblue; */
-  }
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 2px solid cadetblue;
+        padding: 5px;
+        margin-bottom: 30px; */
+  /* > .title {
+          display: none;
+          /* color: cadetblue; */
 }
 #Login {
   margin-top: 1em;
@@ -43,9 +42,9 @@ select {
   border: 2px solid rgb(255, 86, 201);
   padding: 5px;
   margin-bottom: 30px;
-  > .title {
-    color: rgb(255, 86, 201) !important;
-  }
+  /* > .title {
+          color: rgb(255, 86, 201) !important;
+        } */
 }
 #H5 {
   margin-top: 1em;
@@ -55,9 +54,9 @@ select {
   border: 2px solid yellowgreen;
   padding: 5px;
   margin-bottom: 30px;
-  > .title {
-    color: yellowgreen;
-  }
+  /* > .title {
+          color: yellowgreen; */
+  /* } */
 }
 #Profile {
   margin-top: 1em;
@@ -67,9 +66,9 @@ select {
   border: 2px solid darkorchid;
   padding: 5px;
   margin-bottom: 30px;
-  > .title {
-    color: darkorchid;
-  }
+  /* > .title {
+          color: darkorchid;
+        } */
 }
 #Effect {
   margin-top: 1em;
@@ -80,9 +79,9 @@ select {
   padding: 5px;
   width: 300px;
   margin-bottom: 30px;
-  > .title {
-    color: rgb(41, 163, 7);
-  }
+  /* > .title {
+          color: rgb(41, 163, 7);
+        } */
 }
 #My {
   margin-top: 1em;
@@ -92,9 +91,9 @@ select {
   border: 2px solid red;
   padding: 5px;
   margin-bottom: 30px;
-  > .title {
-    color: red;
-  }
+  /* > .title {
+          color: red;
+        } */
 }
 #Hello {
   margin-top: 1em;
@@ -103,9 +102,9 @@ select {
   align-items: center;
   border: 2px solid blue;
   padding: 5px;
-  > .title {
-    color: blue;
-  }
+  /* > .title {
+          color: blue;
+        } */
 }
 #DeferTrans {
   margin-top: 1em;
@@ -114,9 +113,9 @@ select {
   align-items: center;
   border: 2px solid orange;
   padding: 5px;
-  > .title {
-    color: orange;
-  }
+  /* > .title {
+          color: orange;
+        } */
 }
 #Posts {
   margin-top: 1em;
@@ -125,9 +124,9 @@ select {
   align-items: center;
   border: 2px solid darkolivegreen;
   padding: 5px;
-  > .title {
-    color: darkolivegreen;
-  }
+  /* > .title {
+          color: darkolivegreen;
+        } */
 }
 ul {
   display: flex;
@@ -149,12 +148,12 @@ li {
     rgba(9, 30, 66, 0.25) 0px 4px 8px -2px,
     rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
   margin: 10px 0;
-  > button {
-    background-color: tomato;
-    color: white;
-    padding: 6px 8px;
-    margin: 0 2px;
-  }
+  /* > button {
+          background-color: tomato;
+          color: white;
+          padding: 6px 8px;
+          margin: 0 2px;
+        } */
 }
 .card {
   padding: 2em;
@@ -190,12 +189,12 @@ li {
   flex-direction: row;
   align-items: center;
 
-  > input {
-    height: 1em;
-    width: 5em;
-  }
-  > label {
-    font-size: 0.8em;
-    padding-left: 1em;
-  }
+  /* > input {
+          height: 1em;
+          width: 5em;
+        }
+        > label {
+          font-size: 0.8em;
+          padding-left: 1em;
+        } */
 }

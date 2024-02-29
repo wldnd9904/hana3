@@ -1,7 +1,6 @@
 import { createContext, PropsWithChildren, useContext, useEffect } from "react";
 import { useCallback, useMemo, useReducer } from "react";
 import { Session, Cart, LoginUser } from "../type";
-import { useFetch } from "../hooks/fetch";
 
 type SessionContextProp = {
   session: Session;
