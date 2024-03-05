@@ -9,6 +9,8 @@ export default function Home() {
       <Link href='/parallel'>Parallel</Link>
       <Link href='/intercept'>Intercept</Link>
       <Link href='/todos'>Todos</Link>
+      <Link href='/todos2'>Todos2</Link>
+      <Link href='/photos'>Photos</Link>
       <Image
         src='/vercel.svg'
         alt='Vercel Logo'
