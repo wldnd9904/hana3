@@ -1,11 +1,11 @@
 import { getTodo } from '@/lib/gets';
 
 type Props = {
-  params: { todoId: string };
+  params: { ID: string };
 };
 
 export default async function TodosPage({ params }: Props) {
-  const todo = await getTodo(+params.todoId);
+  const todo = await getTodo(+params.ID);
   return (
     <>
       {todo && (
