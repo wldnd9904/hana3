@@ -13,6 +13,7 @@ import { styled } from "styled-components";
 
 interface StackProps extends HTMLAttributes<HTMLDivElement> {
   rotated?: boolean;
+  
 }
 
 export const VStack = (props: PropsWithChildren<StackProps>) => {
