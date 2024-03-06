@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ReactNode } from 'react';
 
 type Time = 'morning' | 'afternoon' | 'evening';
@@ -15,6 +15,13 @@ export default function HelloLayout({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
   const time = pathname.replace(/\/hello\/(.*)$/, '$1');
+
+  const searchParams = useSearchParams();
+  const setSearchParam = (key: string, value: string) => {
+    const sparam = new URLSearchParams(searchParams.toString());
+    sparam.set(key, value);
+    router.push(sparam.toString());
+  };
   const goHelloByTime = () => {
     console.log('pathname=', pathname);
     if (time in TimeTo) {
@@ -31,7 +38,6 @@ export default function HelloLayout({ children }: { children: ReactNode }) {
           {time} -&gt;
         </button>
       </h1>
-
       <div>
         <ul className='flex justify-between text-blue-500'>
           <li>
